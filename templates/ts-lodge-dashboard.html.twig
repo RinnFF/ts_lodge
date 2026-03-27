@@ -1,0 +1,42 @@
+{#
+/**
+ * @file
+ * ts-lodge-dashboard.html.twig
+ *
+ * Theme: ts_lodge_dashboard
+ */
+#}
+<div class="ts-lodge-dashboard">
+  <div class="ts-lodge-dashboard__header">
+    <h1>TS Lodge</h1>
+    <p class="ts-lodge-dashboard__subtitle">Que souhaitez-vous faire ?</p>
+  </div>
+
+  <div class="ts-lodge-dashboard__grid">
+
+    <a href="{{ path('ts_lodge.users') }}" class="ts-lodge-card ts-lodge-card--users">
+      <div class="ts-lodge-card__icon">👥</div>
+      <div class="ts-lodge-card__title">Usagers</div>
+      <div class="ts-lodge-card__desc">Consulter, ajouter et gérer les usagers</div>
+    </a>
+
+    <a href="{{ path('ts_lodge.add_user') }}" class="ts-lodge-card ts-lodge-card--add">
+      <div class="ts-lodge-card__icon">➕</div>
+      <div class="ts-lodge-card__title">Ajouter un usager</div>
+      <div class="ts-lodge-card__desc">Enregistrer un nouvel usager</div>
+    </a>
+
+    <a href="{{ path('ts_lodge.couches') }}" class="ts-lodge-card ts-lodge-card--couches">
+      <div class="ts-lodge-card__icon">🛏️</div>
+      <div class="ts-lodge-card__title">Couchages</div>
+      <div class="ts-lodge-card__desc">Voir l'occupation des couchages par date</div>
+    </a>
+
+    <a href="{{ path('ts_lodge.programs') }}" class="ts-lodge-card ts-lodge-card--programs">
+      <div class="ts-lodge-card__icon">📋</div>
+      <div class="ts-lodge-card__title">Programmes</div>
+      <div class="ts-lodge-card__desc">Gérer les programmes disponibles</div>
+    </a>
+
+  </div>
+</div>

@@ -1,0 +1,28 @@
+{#
+/**
+ * @file
+ * ts-lodge-users.html.twig
+ */
+#}
+<div class="container">
+  <h2>Liste des usagers</h2>
+  <button id="addUserBtn" class="btn-add-user">+ Ajouter un usager</button>
+  <button id="viewCouchBtn" class="btn-find-couch">Voir les couchages</button>
+  <button id="programsBtn" class="btn-programs">Programmes</button>
+  <table id="usersTable">
+    <thead>
+      <tr>
+        <th data-field="lastName">Nom</th>
+        <th data-field="firstName">Prénom</th>
+        <th data-field="gender">Genre</th>
+        <th data-field="birthDate">Date de naissance</th>
+        <th>Âge</th>
+        <th>Actions</th>
+        <th data-field="closestDate">Séjour</th>
+      </tr>
+    </thead>
+    <tbody>
+      {# Chargé par JS #}
+    </tbody>
+  </table>
+</div>

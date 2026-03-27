@@ -1,0 +1,58 @@
+global:
+  css:
+    theme:
+      css/style.css: {}
+
+users:
+  js:
+    js/users.js: { attributes: { defer: true } }
+  dependencies:
+    - ts_lodge/global
+    - core/drupal
+    - core/drupalSettings
+
+add_user:
+  js:
+    js/addUser.js: { attributes: { defer: true } }
+  dependencies:
+    - ts_lodge/global
+    - core/drupal
+
+edit_user:
+  js:
+    js/editUser.js: { attributes: { defer: true } }
+  dependencies:
+    - ts_lodge/global
+    - core/drupal
+
+book_user:
+  js:
+    js/bookUser.js: { attributes: { defer: true } }
+  dependencies:
+    - ts_lodge/global
+    - core/drupal
+
+find_couch:
+  js:
+    js/findCouch.js: { attributes: { defer: true } }
+  dependencies:
+    - ts_lodge/global
+    - core/drupal
+
+couches:
+  js:
+    js/couches.js: { attributes: { defer: true } }
+  dependencies:
+    - ts_lodge/global
+    - core/drupal
+
+programs:
+  js:
+    js/programs.js: { attributes: { defer: true } }
+  dependencies:
+    - ts_lodge/global
+    - core/drupal
+
+dashboard:
+  dependencies:
+    - ts_lodge/global

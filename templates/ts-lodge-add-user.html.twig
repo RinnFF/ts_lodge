@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * ts-lodge-add-user.html.twig
+ */
+#}
+<div class="container">
+  <h2>Ajouter un usager</h2>
+  <form id="userForm">
+    <label for="lastName">Nom</label>
+    <input type="text" id="lastName" required />
+
+    <label for="firstName">Prénom</label>
+    <input type="text" id="firstName" required />
+
+    <label for="gender">Genre</label>
+    <select id="gender" required>
+      <option value="" disabled selected>Choisir un genre</option>
+      <option value="Féminin">Féminin</option>
+      <option value="Masculin">Masculin</option>
+    </select>
+
+    <label>
+      <input type="checkbox" id="isCouple" /> En couple
+    </label>
+
+    <label for="birthDate">Date de naissance</label>
+    <input type="date" id="birthDate" required />
+
+    <div style="margin-top: 20px;">
+      <button type="submit" id="saveBtn" class="btn-save">Enregistrer</button>
+      <button type="button" id="closeBtn" class="btn-close">Fermer</button>
+    </div>
+  </form>
+</div>

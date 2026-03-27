@@ -1,0 +1,33 @@
+ts_lodge.dashboard:
+  title: 'TS Lodge'
+  route_name: ts_lodge.dashboard
+  menu_name: main
+  weight: 50
+
+ts_lodge.users:
+  title: 'Usagers'
+  route_name: ts_lodge.users
+  parent: ts_lodge.dashboard
+  menu_name: main
+  weight: 1
+
+ts_lodge.add_user:
+  title: 'Ajouter un usager'
+  route_name: ts_lodge.add_user
+  parent: ts_lodge.users
+  menu_name: main
+  weight: 2
+
+ts_lodge.couches:
+  title: 'Couchages'
+  route_name: ts_lodge.couches
+  parent: ts_lodge.dashboard
+  menu_name: main
+  weight: 3
+
+ts_lodge.programs:
+  title: 'Programmes'
+  route_name: ts_lodge.programs
+  parent: ts_lodge.dashboard
+  menu_name: main
+  weight: 4
