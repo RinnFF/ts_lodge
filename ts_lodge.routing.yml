@@ -1,0 +1,74 @@
+ts_lodge.dashboard:
+  path: '/ts-lodge'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeController::dashboard'
+    _title: 'TS Lodge – Accueil'
+  requirements:
+    _permission: 'access ts_lodge'
+
+ts_lodge.users:
+  path: '/ts-lodge/usagers'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeController::users'
+    _title: 'Liste des usagers'
+  requirements:
+    _permission: 'access ts_lodge'
+
+ts_lodge.add_user:
+  path: '/ts-lodge/usagers/ajouter'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeController::addUser'
+    _title: 'Ajouter un usager'
+  requirements:
+    _permission: 'create ts_lodge_usager'
+
+ts_lodge.edit_user:
+  path: '/ts-lodge/usagers/modifier'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeController::editUser'
+    _title: 'Modifier un usager'
+  requirements:
+    _permission: 'edit ts_lodge_usager'
+
+ts_lodge.book_user:
+  path: '/ts-lodge/reservation'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeController::bookUser'
+    _title: 'Réservation'
+  requirements:
+    _permission: 'create ts_lodge_booking'
+
+ts_lodge.find_couch:
+  path: '/ts-lodge/choisir-couchage'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeController::findCouch'
+    _title: 'Choisir un couchage'
+  requirements:
+    _permission: 'edit ts_lodge_booking'
+
+ts_lodge.couches:
+  path: '/ts-lodge/couchages'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeController::couches'
+    _title: 'Occupation des couchages'
+  requirements:
+    _permission: 'view ts_lodge_booking'
+
+ts_lodge.programs:
+  path: '/ts-lodge/programmes'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeController::programs'
+    _title: 'Gestion des programmes'
+  requirements:
+    _permission: 'view ts_lodge_programme'
+
+ts_lodge.migrate:
+  path: '/ts-lodge/migration'
+  defaults:
+    _form:  '\Drupal\ts_lodge\Form\TsLodgeMigrateForm'
+    _title: 'Importer les données localStorage'
+  requirements:
+    _permission: 'administer site configuration'
+
+# REST endpoints are handled by Drupal's REST module automatically
+# via the RestResource plugin annotations — no manual routing needed.

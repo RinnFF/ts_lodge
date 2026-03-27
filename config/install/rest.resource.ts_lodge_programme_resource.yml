@@ -1,0 +1,14 @@
+id: ts_lodge_programme_resource
+plugin_id: ts_lodge_programme_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PATCH
+    - DELETE
+  formats:
+    - json
+  authentication:
+    - cookie
+    - basic_auth
