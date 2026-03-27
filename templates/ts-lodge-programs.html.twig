@@ -1,0 +1,52 @@
+{#
+/**
+ * @file
+ * ts-lodge-programs.html.twig
+ */
+#}
+<div class="container">
+  <h2>Liste des programmes</h2>
+
+  <div style="display:flex; gap:10px; margin-bottom:15px;">
+    <button id="addProgramBtn" class="btn-add-program">+ Ajouter un programme</button>
+    <button id="backBtn" class="btn-close-program">Fermer</button>
+  </div>
+
+  <table id="programsTable">
+    <thead>
+      <tr>
+        <th>Catégorie</th>
+        <th>Nom du programme</th>
+        <th>Code</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div id="programFormContainer" style="display:none; margin-top:20px;">
+    <h3 id="formTitle">Ajouter un programme</h3>
+    <form id="programForm">
+      <label>Catégorie</label>
+      <select id="category" required>
+        <option value="" disabled selected>Choisir une catégorie</option>
+        <option value="Scientifique">Scientifique</option>
+        <option value="Éducatif">Éducatif</option>
+        <option value="Conservation">Conservation</option>
+        <option value="Bénévole">Bénévole</option>
+        <option value="Autre">Autre</option>
+      </select>
+
+      <label>Nom du programme</label>
+      <input type="text" id="name" required />
+
+      <label>Code</label>
+      <input type="text" id="code" required />
+
+      <div style="margin-top:10px;">
+        <button type="submit" class="btn-save">Enregistrer</button>
+        <button type="button" id="cancelBtn" class="btn-close">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>

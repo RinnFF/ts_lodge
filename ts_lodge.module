@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * TS Lodge module – hook implementations.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function ts_lodge_theme(): array {
+  return [
+    'ts_lodge_dashboard'  => ['template' => 'ts-lodge-dashboard',  'variables' => []],
+    'ts_lodge_users'      => ['template' => 'ts-lodge-users',      'variables' => []],
+    'ts_lodge_add_user'   => ['template' => 'ts-lodge-add-user',   'variables' => []],
+    'ts_lodge_edit_user'  => ['template' => 'ts-lodge-edit-user',  'variables' => []],
+    'ts_lodge_book_user'  => ['template' => 'ts-lodge-book-user',  'variables' => []],
+    'ts_lodge_find_couch' => ['template' => 'ts-lodge-find-couch', 'variables' => []],
+    'ts_lodge_couches'    => ['template' => 'ts-lodge-couches',    'variables' => []],
+    'ts_lodge_programs'   => ['template' => 'ts-lodge-programs',   'variables' => []],
+  ];
+}
+
+/**
+ * Implements hook_views_data_alter().
+ *
+ * Ensures all three TS Lodge entity types are available in Views.
+ */
+function ts_lodge_views_data_alter(array &$data): void {
+  // Relationships are declared in the EntityViewsData handlers.
+  // This hook is available for any additional cross-entity tweaks.
+}
