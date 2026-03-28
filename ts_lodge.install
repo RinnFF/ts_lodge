@@ -16,7 +16,14 @@ function ts_lodge_install(): void {
   \Drupal::service('config.installer')->installDefaultConfig('module', 'ts_lodge');
 
   // Create the entity type database tables.
-  \Drupal::entityDefinitionUpdateManager()->applyPendingUpdates();
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type_manager = \Drupal::entityTypeManager();
+  foreach (['ts_lodge_usager', 'ts_lodge_booking', 'ts_lodge_programme'] as $type) {
+    $definition = $entity_type_manager->getDefinition($type, FALSE);
+    if ($definition) {
+      $manager->installEntityType($definition);
+    }
+  }
 }
 
 /**
