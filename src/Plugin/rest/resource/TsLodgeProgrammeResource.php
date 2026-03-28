@@ -16,8 +16,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *   id = "ts_lodge_programme_resource",
  *   label = @Translation("TS Lodge Programme"),
  *   uri_paths = {
- *     "canonical" = "/api/ts-lodge/programmes/{id}",
- *     "create"    = "/api/ts-lodge/programmes",
+ *     "canonical"  = "/api/ts-lodge/programmes/{id}",
+ *     "create"     = "/api/ts-lodge/programmes",
+ *     "collection" = "/api/ts-lodge/programmes",
  *   }
  * )
  */
@@ -29,12 +30,17 @@ class TsLodgeProgrammeResource extends ResourceBase {
     if ($id) {
       $entity = TsLodgeProgramme::load($id);
       if (!$entity) throw new NotFoundHttpException("Programme $id introuvable.");
-      return new ResourceResponse($this->serialize($entity), 200);
+      $response = new ResourceResponse($this->serialize($entity), 200);
+      $response->addCacheableDependency($entity);
+      return $response;
     }
 
     $ids = \Drupal::entityQuery('ts_lodge_programme')->accessCheck(TRUE)->execute();
     $entities = TsLodgeProgramme::loadMultiple($ids);
-    return new ResourceResponse(array_values(array_map([$this, 'serialize'], $entities)), 200);
+    $data = array_values(array_map([$this, 'serialize'], $entities));
+    $response = new ResourceResponse($data, 200);
+    $response->getCacheableMetadata()->setCacheMaxAge(0);
+    return $response;
   }
 
   public function post(Request $request): ResourceResponse {

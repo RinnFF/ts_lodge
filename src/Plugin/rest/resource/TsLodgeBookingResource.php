@@ -16,8 +16,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *   id = "ts_lodge_booking_resource",
  *   label = @Translation("TS Lodge Réservation"),
  *   uri_paths = {
- *     "canonical" = "/api/ts-lodge/bookings/{id}",
- *     "create"    = "/api/ts-lodge/bookings",
+ *     "canonical"  = "/api/ts-lodge/bookings/{id}",
+ *     "create"     = "/api/ts-lodge/bookings",
+ *     "collection" = "/api/ts-lodge/bookings",
  *   }
  * )
  */

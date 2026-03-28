@@ -16,8 +16,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *   id = "ts_lodge_usager_resource",
  *   label = @Translation("TS Lodge Usager"),
  *   uri_paths = {
- *     "canonical" = "/api/ts-lodge/usagers/{id}",
- *     "create"    = "/api/ts-lodge/usagers",
+ *     "canonical"  = "/api/ts-lodge/usagers/{id}",
+ *     "create"     = "/api/ts-lodge/usagers",
+ *     "collection" = "/api/ts-lodge/usagers",
  *   }
  * )
  */
@@ -42,7 +43,9 @@ class TsLodgeUsagerResource extends ResourceBase {
       ->execute();
     $entities = TsLodgeUsager::loadMultiple($ids);
     $data = array_values(array_map([$this, 'serialize'], $entities));
-    return new ResourceResponse($data, 200);
+    $response = new ResourceResponse($data, 200);
+    $response->getCacheableMetadata()->setCacheMaxAge(0);
+    return $response;
   }
 
   /**
