@@ -9,9 +9,14 @@
  * Implements hook_install().
  */
 function ts_lodge_install(): void {
-  // Tables are created automatically by Drupal's entity system.
-  // We just ensure the REST module is enabled.
+  // Ensure REST and serialization modules are enabled.
   \Drupal::service('module_installer')->install(['rest', 'serialization'], TRUE);
+
+  // Install REST resource config and role config.
+  \Drupal::service('config.installer')->installDefaultConfig('module', 'ts_lodge');
+
+  // Create the entity type database tables.
+  \Drupal::entityDefinitionUpdateManager()->applyPendingUpdates();
 }
 
 /**
