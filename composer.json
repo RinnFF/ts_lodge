@@ -3,7 +3,7 @@
     "description": "Drupal 10/11 module for TS Lodge – user, booking and accommodation management with Drupal entities and Views integration.",
     "type": "drupal-module",
     "license": "GPL-2.0-or-later",
-    "version": "2.0.3",
+    "version": "2.0.5",
     "authors": [
         {
             "name": "RinnFF",
@@ -19,7 +19,7 @@
     },
     "extra": {
         "drupal": {
-            "version": "2.0.3"
+            "version": "2.0.5"
         }
     },
     "support": {
