@@ -42,7 +42,7 @@
 
     if (body !== undefined) opts.body = JSON.stringify(body);
 
-    const resp = await fetch(url + '?_format=json', opts);
+    const resp = await fetch(url, opts);
     if (resp.status === 204) return null;
     if (!resp.ok) {
       const text = await resp.text();

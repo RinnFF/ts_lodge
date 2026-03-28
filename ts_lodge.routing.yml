@@ -72,3 +72,53 @@ ts_lodge.migrate:
 
 # REST endpoints are handled by Drupal's REST module automatically
 # via the RestResource plugin annotations — no manual routing needed.
+
+# ── JSON API endpoints (replaces REST module routing) ──────────────
+
+ts_lodge.api.usagers.collection:
+  path: '/api/ts-lodge/usagers'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeApiController::usagers'
+  methods: [GET, POST]
+  requirements:
+    _permission: 'access ts_lodge'
+
+ts_lodge.api.usagers.item:
+  path: '/api/ts-lodge/usagers/{id}'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeApiController::usager'
+  methods: [GET, PATCH, DELETE]
+  requirements:
+    _permission: 'access ts_lodge'
+
+ts_lodge.api.bookings.collection:
+  path: '/api/ts-lodge/bookings'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeApiController::bookings'
+  methods: [GET, POST]
+  requirements:
+    _permission: 'access ts_lodge'
+
+ts_lodge.api.bookings.item:
+  path: '/api/ts-lodge/bookings/{id}'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeApiController::booking'
+  methods: [GET, PATCH, DELETE]
+  requirements:
+    _permission: 'access ts_lodge'
+
+ts_lodge.api.programmes.collection:
+  path: '/api/ts-lodge/programmes'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeApiController::programmes'
+  methods: [GET, POST]
+  requirements:
+    _permission: 'access ts_lodge'
+
+ts_lodge.api.programmes.item:
+  path: '/api/ts-lodge/programmes/{id}'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeApiController::programme'
+  methods: [GET, PATCH, DELETE]
+  requirements:
+    _permission: 'access ts_lodge'
