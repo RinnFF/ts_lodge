@@ -1,0 +1,9 @@
+name: 'TS Lodge'
+type: module
+description: 'Gestion des usagers, réservations et couchages pour TS Lodge.'
+package: Custom
+core_version_requirement: ^10 || ^11
+version: '2.0.9'
+dependencies:
+  - drupal:user
+  - drupal:views

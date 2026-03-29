@@ -1,0 +1,38 @@
+{#
+/**
+ * @file
+ * ts-lodge-book-user.html.twig
+ */
+#}
+<div class="container">
+  <h2>Réservation d'un usager</h2>
+  <form id="bookingForm">
+    <label for="lastName">Nom</label>
+    <input type="text" id="lastName" disabled />
+
+    <label for="firstName">Prénom</label>
+    <input type="text" id="firstName" disabled />
+
+    <label>Âge</label>
+    <div id="ageStatus" class="age-status"></div>
+
+    <label for="programme">Programme</label>
+    <select id="programme" required>
+      <option value="" disabled selected>Choisir un programme</option>
+    </select>
+
+    <label for="arrivalDate">Date d'arrivée</label>
+    <input type="date" id="arrivalDate" required />
+
+    <label for="departureDate">Date de départ</label>
+    <input type="date" id="departureDate" required />
+
+    <label for="notes">Notes</label>
+    <textarea id="notes" rows="4" placeholder="Remarques éventuelles"></textarea>
+
+    <div id="btnContainer">
+      <button type="button" id="findCouchBtn" class="btn-save">Trouver un couchage</button>
+      <button type="button" id="backBtn" class="btn-close">Retour</button>
+    </div>
+  </form>
+</div>

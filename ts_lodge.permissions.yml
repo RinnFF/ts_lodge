@@ -1,0 +1,34 @@
+# General access
+access ts_lodge:
+  title: 'Access TS Lodge application'
+  description: 'Access all TS Lodge pages.'
+
+# Usager permissions
+view ts_lodge_usager:
+  title: 'View usagers'
+create ts_lodge_usager:
+  title: 'Create usagers'
+edit ts_lodge_usager:
+  title: 'Edit usagers'
+delete ts_lodge_usager:
+  title: 'Delete usagers'
+
+# Booking permissions
+view ts_lodge_booking:
+  title: 'View bookings'
+create ts_lodge_booking:
+  title: 'Create bookings'
+edit ts_lodge_booking:
+  title: 'Edit bookings'
+delete ts_lodge_booking:
+  title: 'Delete bookings'
+
+# Programme permissions
+view ts_lodge_programme:
+  title: 'View programmes'
+create ts_lodge_programme:
+  title: 'Create programmes'
+edit ts_lodge_programme:
+  title: 'Edit programmes'
+delete ts_lodge_programme:
+  title: 'Delete programmes'

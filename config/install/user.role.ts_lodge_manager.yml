@@ -1,0 +1,34 @@
+uuid: ts-lodge-manager-role
+langcode: en
+status: true
+dependencies: {}
+id: ts_lodge_manager
+label: 'TS Lodge Manager'
+weight: 3
+is_admin: false
+permissions:
+  - 'access ts_lodge'
+  - 'view ts_lodge_usager'
+  - 'create ts_lodge_usager'
+  - 'edit ts_lodge_usager'
+  - 'delete ts_lodge_usager'
+  - 'view ts_lodge_booking'
+  - 'create ts_lodge_booking'
+  - 'edit ts_lodge_booking'
+  - 'delete ts_lodge_booking'
+  - 'view ts_lodge_programme'
+  - 'create ts_lodge_programme'
+  - 'edit ts_lodge_programme'
+  - 'delete ts_lodge_programme'
+  - 'restful get ts_lodge_usager_resource'
+  - 'restful post ts_lodge_usager_resource'
+  - 'restful patch ts_lodge_usager_resource'
+  - 'restful delete ts_lodge_usager_resource'
+  - 'restful get ts_lodge_booking_resource'
+  - 'restful post ts_lodge_booking_resource'
+  - 'restful patch ts_lodge_booking_resource'
+  - 'restful delete ts_lodge_booking_resource'
+  - 'restful get ts_lodge_programme_resource'
+  - 'restful post ts_lodge_programme_resource'
+  - 'restful patch ts_lodge_programme_resource'
+  - 'restful delete ts_lodge_programme_resource'
