@@ -1,0 +1,476 @@
+/* ---------- VARIABLES COULEURS ---------- */
+/* (kept global — already --ts- prefixed, no conflict) */
+:root {
+    --ts-blue-dark: #112940;   
+    --ts-green: #0a7a72;       
+    --ts-gray: #efefef;       
+    --ts-orange: #A64323;      
+    --ts-blue-medium: #0c5ea0; 
+    --ts-blue-light: #72c4ff; 
+    --ts-cream:#f5f7f7;
+}
+
+/* ==========================================================
+   All ts_lodge styles scoped to .tslo-wrapper
+   Wrap the module's output in <div class="tslo-wrapper">
+   ========================================================== */
+.tslo-wrapper {
+
+    /* ---------- POLICE GLOBALE ---------- */
+    font-family: "Century Gothic", Arial, sans-serif;
+
+    input, button, select, textarea {
+        font-family: "Century Gothic", Arial, sans-serif;
+    }
+
+    /* ---------- CONTAINER ---------- */
+    .tslo-container {
+        display: inline-block;
+        padding: 20px 30px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* ---------- FORMULAIRES ---------- */
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        min-width: 320px;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+        padding: 8px;
+        border: 1px solid var(--ts-blue-light);
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    /* ---------- TABLEAU ---------- */
+    table {
+        border-collapse: collapse;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    th {
+        padding: 8px 15px;
+        border: 1px solid var(--ts-blue-light);
+        text-align: left;
+        background-color: var(--ts-blue-dark);
+        color: white;
+        position: relative;
+        user-select: none;
+    }
+
+    td {
+        padding: 6px 15px;
+        border: 1px solid var(--ts-blue-light);
+        text-align: left;
+    }
+
+    .btn-find-couch {
+        background-color: var(--ts-green);
+        color: white;
+        margin-bottom: 15px;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 16px;
+
+        &:hover {
+            background-color: #097e79;
+        }
+    }
+
+    .btn-programs {
+        background-color: var(--ts-blue-dark);
+        color: white;
+        margin-bottom: 15px;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    /* Icônes de tri */
+    th.sort-asc::after,
+    th.sort-desc::after {
+        position: absolute;
+        right: 8px;
+        font-size: 0.8em;
+    }
+
+    th.sort-asc::after  { content: "▲"; }
+    th.sort-desc::after { content: "▼"; }
+
+    /* Colonnes triables */
+    #usersTable {
+        th[onclick] {
+            padding-right: 26px;
+            min-width: 120px;
+            white-space: nowrap;
+        }
+
+        /* Largeurs spécifiques */
+        th:nth-child(1) { min-width: 92px; }
+        th:nth-child(2) { min-width: 140px; }
+        th:nth-child(4) { min-width: 160px; }
+        th:nth-child(7) { min-width: 92px; }
+
+        th[onclick]:hover {
+            background-color: #1f365d;
+            cursor: pointer;
+        }
+    }
+
+    /* Supprimer l'ancien alterné */
+    tr:nth-child(even) {
+        background-color: unset;
+    }
+
+    /* Lignes usager */
+    .user-row {
+        background-color: white;
+    }
+
+    /* Lignes réservation */
+    .booking-row td {
+        background-color: var(--ts-cream) !important;
+    }
+
+    /* ---------- STATUT ÂGE ---------- */
+    .age-ok {
+        background-color: var(--ts-green);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .age-low {
+        background-color: var(--ts-cream);
+        color: #333;
+        padding: 4px 8px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    /* ---------- BOUTONS GÉNÉRAUX ---------- */
+    button {
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        transition: background-color 0.2s;
+    }
+
+    /* ---------- BOUTON EDIT ---------- */
+    .btn-edit {
+        background-color: var(--ts-blue-dark);
+        color: white;
+
+        &:hover { background-color: #0d192b; }
+    }
+
+    /* ---------- BOUTON BOOK ---------- */
+    .btn-book {
+        background-color: var(--ts-blue-medium);
+        color: white;
+
+        &:hover { background-color: #084879; }
+    }
+
+    /* ---------- BOUTON SUPPRIMER ---------- */
+    .btn-delete {
+        background-color: var(--ts-orange);
+        color: white;
+
+        &:hover { background-color: #a84300; }
+    }
+
+    /* ---------- BOUTON ENREGISTRER ---------- */
+    .btn-save {
+        background-color: var(--ts-green);
+        color: white;
+
+        &:hover { background-color: #097e79; }
+    }
+
+    /* ---------- BOUTON FERMER ---------- */
+    .btn-close {
+        background-color: var(--ts-orange);
+        color: white;
+
+        &:hover { background-color: #a84300; }
+    }
+
+    .btn-close-program {
+        background-color: var(--ts-orange);
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+
+        &:hover { background-color: #a84300; }
+    }
+
+    /* ---------- BOUTON AJOUTER USAGER ---------- */
+    .btn-add-user {
+        background-color: var(--ts-blue-medium);
+        color: white;
+        margin-bottom: 15px;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 16px;
+
+        &:hover { background-color: #084879; }
+    }
+
+    .btn-add-program {
+        background-color: var(--ts-blue-medium);
+        color: white;
+        margin-bottom: 15px;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    /* ---------- ESPACEMENT BOUTONS DANS TABLE ---------- */
+    td button {
+        margin-right: 5px;
+    }
+
+    /* --- findCouch.html styles --- */
+    h3 {
+        margin-top: 30px;
+        color: var(--ts-blue-dark);
+    }
+
+    /* --- Stylisation des groupes --- */
+    .groups-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .groups-c {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        gap: 20px;
+    }
+
+    .group {
+        display: inline-block;
+        min-width: max-content;
+        margin-bottom: 15px;
+        padding: 15px;
+        border: 2px solid var(--ts-green);
+        border-radius: 10px;
+        background-color: white;
+
+        h3 {
+            margin-top: 0;
+            color: var(--ts-blue-dark);
+            margin-bottom: 15px;
+        }
+    }
+
+    .group-c {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        gap: 8px;
+        justify-content: flex-start;
+    }
+
+    .group-t {
+        display: grid;
+        grid-template-columns: repeat(4, auto);
+        gap: 8px;
+        justify-content: flex-start;
+    }
+
+    .btn-couch {
+        background-color: var(--ts-blue-light);
+        border: none;
+        color: var(--ts-blue-dark);
+        font-weight: bold;
+        padding: 8px 16px;
+        border-radius: 7px;
+        cursor: pointer;
+        min-width: 60px;
+        transition: background-color 0.2s, color 0.2s;
+
+        &:hover {
+            background-color: var(--ts-blue-medium);
+            color: white;
+        }
+    }
+
+    /* Bouton suppression réservation (X) */
+    .btn-delete-booking {
+        background-color: var(--ts-orange);
+        color: white;
+        border: none;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-left: auto;
+
+        &:hover { background-color: #a84300; }
+    }
+
+    /* Ligne de récap réservation */
+    .booking-details {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: #f9f9f9;
+        font-size: 14px;
+        padding: 6px 10px;
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: space-between;
+    }
+
+    .couch-blue {
+        background-color: var(--ts-blue-light) !important;
+        color: var(--ts-blue-dark) !important;
+    }
+
+    .couch-green {
+        background-color: var(--ts-green) !important;
+        color: white !important;
+    }
+
+    .couch-orange {
+        background-color: var(--ts-orange) !important;
+        color: white !important;
+    }
+
+    /* ---------- BOUTON EDIT RÉSERVATION ---------- */
+    .btn-edit-res {
+        background-color: var(--ts-blue-dark);
+        color: white;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover { background-color: var(--ts-blue-medium); }
+    }
+
+    .couple-badge {
+        color: red;
+        font-size: 1.1em;
+        margin-left: 4px;
+    }
+
+    #selectDate, #couchesContainer, #couchesTitle, #btnContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    #closeBtn, #saveBtn {
+        display: block;
+        margin: 20px auto;
+    }
+
+    /* =========================================================
+       DASHBOARD – ts-lodge-dashboard.html.twig
+       ========================================================= */
+
+    .ts-lodge-dashboard {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        font-family: "Century Gothic", Arial, sans-serif;
+    }
+
+    .ts-lodge-dashboard__header {
+        text-align: center;
+        margin-bottom: 40px;
+
+        h1 {
+            font-size: 2.4rem;
+            color: var(--ts-blue-dark);
+            margin: 0 0 8px;
+            letter-spacing: 1px;
+        }
+    }
+
+    .ts-lodge-dashboard__subtitle {
+        font-size: 1.1rem;
+        color: #666;
+        margin: 0;
+    }
+
+    .ts-lodge-dashboard__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 24px;
+    }
+
+    .ts-lodge-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 32px 20px 28px;
+        border-radius: 14px;
+        text-decoration: none;
+        color: white;
+        font-family: "Century Gothic", Arial, sans-serif;
+        transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+        cursor: pointer;
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+            filter: brightness(1.06);
+            text-decoration: none;
+            color: white;
+        }
+    }
+
+    .ts-lodge-card__icon {
+        font-size: 2.4rem;
+        margin-bottom: 14px;
+        line-height: 1;
+    }
+
+    .ts-lodge-card__title {
+        font-size: 1.05rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .ts-lodge-card__desc {
+        font-size: 0.82rem;
+        opacity: 0.88;
+        line-height: 1.4;
+    }
+
+    /* Card colour variants */
+    .ts-lodge-card--users    { background-color: var(--ts-blue-medium); }
+    .ts-lodge-card--add      { background-color: var(--ts-green); }
+    .ts-lodge-card--couches  { background-color: var(--ts-blue-dark); }
+    .ts-lodge-card--programs { background-color: var(--ts-orange); }
+}
