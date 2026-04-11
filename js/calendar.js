@@ -1,8 +1,7 @@
-(function (Drupal) {
-  'use strict';
+( function tsLodgeCalendarModule(Drupal) {
 
   Drupal.behaviors.tsLodgeCalendar = {
-    attach: function (context, settings) {
+    attach: function tsLodgeCalendarModule(context, _settings) {
       const wrapper = context.querySelector('.tslo-wrapper');
       if (!wrapper || wrapper.querySelector('.tslo-calendar-section')) return;
 
@@ -127,7 +126,7 @@
 
               const entries = dayMap[dateStr] || [];
               entries.forEach(e => {
-                html += `<a class="tslo-cal-entry" href="/ts-lodge/usagers/${e.userId}" title="${e.lastName} – ${e.couch}">`;
+                html += `<a class="tslo-cal-entry" href="/ts-lodge/reservation/${e.bookingId}" title="${e.lastName} – ${e.couch}">`;
                 html += `<span class="tslo-cal-entry-name">${e.lastName}</span>`;
                 html += `<span class="tslo-cal-entry-couch">${e.couch}</span>`;
                 html += `</a>`;

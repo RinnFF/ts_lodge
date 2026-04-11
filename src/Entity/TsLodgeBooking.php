@@ -19,6 +19,9 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *     "list_builder" = "Drupal\Core\Entity\EntityListBuilder",
  *     "views_data" = "Drupal\ts_lodge\Entity\TsLodgeBookingViewsData",
  *     "access" = "Drupal\ts_lodge\Entity\TsLodgeEntityAccessControlHandler",
+ *     "route_provider" = {
+ *       "html" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
+ *     },
  *   },
  *   base_table = "ts_lodge_booking",
  *   entity_keys = {
