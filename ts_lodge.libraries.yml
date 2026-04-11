@@ -62,3 +62,9 @@ programs:
 dashboard:
   dependencies:
     - ts_lodge/global
+
+calendar:
+  js:
+    js/calendar.js: { attributes: { defer: true } }
+  dependencies:
+    - ts_lodge/global

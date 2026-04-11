@@ -1,79 +1,97 @@
-/**
- * @file
- * api.js – Shared JSON API client for TS Lodge.
- *
- * Communicates with TsLodgeApiController via explicit routes
- * defined in ts_lodge.routing.yml.
- * Fetches a fresh CSRF token from Drupal's session endpoint before
- * making any mutating requests (POST, PATCH, DELETE).
- */
 (function (window) {
-
   'use strict';
 
-  const settings = (typeof drupalSettings !== 'undefined' && drupalSettings.tsLodge)
-    ? drupalSettings.tsLodge : {};
-  const api = settings.api || {};
+  // ── Shared cache ────────────────────────────────────────────────────────────
+  // Stores resolved data for GET collection endpoints.
+  // Write operations (POST, PATCH, DELETE) invalidate the relevant entry
+  // so the next read fetches fresh data.
+  const _cache = {};
 
-  // Cache the token once fetched.
-  let _csrfToken = null;
-
-  async function getCsrfToken() {
-    if (_csrfToken) return _csrfToken;
-    const resp = await fetch('/session/token', {
-      credentials: 'same-origin',
-    });
-    _csrfToken = await resp.text();
-    return _csrfToken;
+  function invalidate(key) {
+    delete _cache[key];
   }
 
-  async function request(method, url, body) {
-    const opts = {
-      method,
+  // ── API endpoint paths ───────────────────────────────────────────────────────
+  const api = {
+    usagers:    '/api/ts-lodge/usagers',
+    bookings:   '/api/ts-lodge/bookings',
+    programmes: '/api/ts-lodge/programmes',
+  };
+
+  // ── CSRF token ───────────────────────────────────────────────────────────────
+  let _token = null;
+
+  function getToken() {
+    if (_token) return Promise.resolve(_token);
+    return fetch('/session/token', {
       credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    };
-
-    // CSRF token required for all mutating requests.
-    if (method !== 'GET') {
-      opts.headers['X-CSRF-Token'] = await getCsrfToken();
-    }
-
-    if (body !== undefined) opts.body = JSON.stringify(body);
-
-    const resp = await fetch(url, opts);
-    if (resp.status === 204) return null;
-    if (!resp.ok) {
-      const text = await resp.text();
-      throw new Error(text || resp.statusText);
-    }
-    return resp.json();
+    })
+      .then(r => r.text())
+      .then(t => { _token = t; return t; });
   }
 
-  // ── Usagers ────────────────────────────────────────────────────
-  window.TsApi = window.TsApi || {};
+  // ── Core request helper ──────────────────────────────────────────────────────
+  function request(method, url, data) {
+    if (method === 'GET') {
+      // Return cached collection responses
+      if (_cache[url]) return Promise.resolve(_cache[url]);
+      return fetch(url)
+        .then(r => r.json())
+        .then(d => {
+          // Only cache collection endpoints (no trailing /<id>)
+          const isCollection = Object.values(api).includes(url);
+          if (isCollection) _cache[url] = d;
+          return d;
+        });
+    }
 
-  TsApi.getUsagers    = ()        => request('GET',    api.usagers);
-  TsApi.getUsager     = (id)      => request('GET',    api.usagers + '/' + id);
-  TsApi.createUsager  = (data)    => request('POST',   api.usagers, data);
-  TsApi.updateUsager  = (id, d)   => request('PATCH',  api.usagers + '/' + id, d);
-  TsApi.deleteUsager  = (id)      => request('DELETE', api.usagers + '/' + id);
+    // Write operations — get CSRF token first
+    return getToken().then(token =>
+      fetch(url, {
+        method,
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': token,
+        },
+        body: data ? JSON.stringify(data) : undefined,
+      }).then(r => r.ok ? r.json().catch(() => ({})) : Promise.reject(r))
+    );
+  }
 
-  // ── Bookings ───────────────────────────────────────────────────
-  TsApi.getBookings   = ()        => request('GET',    api.bookings);
-  TsApi.getBooking    = (id)      => request('GET',    api.bookings + '/' + id);
-  TsApi.createBooking = (data)    => request('POST',   api.bookings, data);
-  TsApi.updateBooking = (id, d)   => request('PATCH',  api.bookings + '/' + id, d);
-  TsApi.deleteBooking = (id)      => request('DELETE', api.bookings + '/' + id);
+  // ── Public API ───────────────────────────────────────────────────────────────
+  window.TsApi = {
 
-  // ── Programmes ─────────────────────────────────────────────────
-  TsApi.getProgrammes   = ()      => request('GET',    api.programmes);
-  TsApi.getProgramme    = (id)    => request('GET',    api.programmes + '/' + id);
-  TsApi.createProgramme = (data)  => request('POST',   api.programmes, data);
-  TsApi.updateProgramme = (id, d) => request('PATCH',  api.programmes + '/' + id, d);
-  TsApi.deleteProgramme = (id)    => request('DELETE', api.programmes + '/' + id);
+    // Usagers
+    getUsagers:    ()        => request('GET',    api.usagers),
+    getUsager:     (id)      => request('GET',    api.usagers + '/' + id),
+    createUsager:  (data)    => request('POST',   api.usagers, data)
+                                  .then(d => { invalidate(api.usagers); return d; }),
+    updateUsager:  (id, d)   => request('PATCH',  api.usagers + '/' + id, d)
+                                  .then(r => { invalidate(api.usagers); return r; }),
+    deleteUsager:  (id)      => request('DELETE', api.usagers + '/' + id)
+                                  .then(r => { invalidate(api.usagers); return r; }),
+
+    // Bookings
+    getBookings:    ()        => request('GET',    api.bookings),
+    getBooking:     (id)      => request('GET',    api.bookings + '/' + id),
+    createBooking:  (data)    => request('POST',   api.bookings, data)
+                                   .then(d => { invalidate(api.bookings); return d; }),
+    updateBooking:  (id, d)   => request('PATCH',  api.bookings + '/' + id, d)
+                                   .then(r => { invalidate(api.bookings); return r; }),
+    deleteBooking:  (id)      => request('DELETE', api.bookings + '/' + id)
+                                   .then(r => { invalidate(api.bookings); return r; }),
+
+    // Programmes
+    getProgrammes:    ()        => request('GET',    api.programmes),
+    getProgramme:     (id)      => request('GET',    api.programmes + '/' + id),
+    createProgramme:  (data)    => request('POST',   api.programmes, data)
+                                     .then(d => { invalidate(api.programmes); return d; }),
+    updateProgramme:  (id, d)   => request('PATCH',  api.programmes + '/' + id, d)
+                                     .then(r => { invalidate(api.programmes); return r; }),
+    deleteProgramme:  (id)      => request('DELETE', api.programmes + '/' + id)
+                                     .then(r => { invalidate(api.programmes); return r; }),
+
+  };
 
 })(window);
