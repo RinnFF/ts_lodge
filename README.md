@@ -18,7 +18,8 @@ ts_lodge/
 ├── composer.json                  # Composer package definition
 ├── src/
 │   ├── Controller/
-│   │   └── TsLodgeController.php  # Page controllers (one method per route)
+│   │   ├── TsLodgeController.php     # Page controllers (one method per route)
+│   │   └── TsLodgeApiController.php  # JSON API controller (usagers, bookings, programmes)
 │   ├── Entity/
 │   │   ├── TsLodgeUsager.php                    # Usager content entity
 │   │   ├── TsLodgeBooking.php                   # Booking content entity
@@ -30,18 +31,11 @@ ts_lodge/
 │   ├── Form/
 │   │   └── TsLodgeMigrateForm.php  # One-time localStorage → DB migration form
 │   └── Plugin/
-│       ├── rest/resource/
-│       │   ├── TsLodgeUsagerResource.php    # REST API – usagers
-│       │   ├── TsLodgeBookingResource.php   # REST API – bookings
-│       │   └── TsLodgeProgrammeResource.php # REST API – programmes
 │       └── views/field/
 │           └── TsLodgeAgeField.php  # Custom Views field: computed age (+21/<21)
 ├── config/
 │   └── install/
-│       ├── user.role.ts_lodge_manager.yml             # TS Lodge Manager role
-│       ├── rest.resource.ts_lodge_usager_resource.yml
-│       ├── rest.resource.ts_lodge_booking_resource.yml
-│       └── rest.resource.ts_lodge_programme_resource.yml
+│       └── user.role.ts_lodge_manager.yml  # TS Lodge Manager role
 ├── templates/
 │   ├── ts-lodge-dashboard.html.twig   # Home / "What do you want to do?" grid
 │   ├── ts-lodge-users.html.twig
@@ -54,7 +48,8 @@ ts_lodge/
 ├── css/
 │   └── style.css
 └── js/
-    ├── api.js        # Shared REST API client (TsApi.*)
+    ├── api.js        # Shared API client (TsApi.*) – talks to TsLodgeApiController
+    ├── calendar.js   # Couch occupancy calendar view
     ├── users.js
     ├── addUser.js
     ├── editUser.js
@@ -76,7 +71,7 @@ All data is stored in **Drupal's database** in three custom entity tables:
 | `ts_lodge_booking`   | `TsLodgeBooking`   | Bookings linking usager + programme  |
 | `ts_lodge_programme` | `TsLodgeProgramme` | Available programmes                 |
 
-The JavaScript front-end communicates with the database exclusively through the Drupal REST API (`/api/ts-lodge/...`). There is no use of `localStorage` in v2.
+The JavaScript front-end communicates with the database exclusively through a custom JSON controller (`TsLodgeApiController`) at `/api/ts-lodge/...`. There is no use of `localStorage` in v2.
 
 ---
 
@@ -104,7 +99,7 @@ composer require rinnff/ts_lodge:^2.0
 **3. Enable dependencies and the module:**
 
 ```bash
-drush en rest serialization views ts_lodge -y
+drush en views ts_lodge -y
 ```
 
 **4. Clear caches:**
@@ -124,7 +119,7 @@ drush cr
 **2.** Enable dependencies and the module:
 
 ```bash
-drush en rest serialization views ts_lodge -y
+drush en views ts_lodge -y
 ```
 
 **3.** Clear caches:
@@ -186,7 +181,9 @@ Individual permissions can also be configured at `/admin/people/permissions` und
 | `ts_lodge.programs`     | `/ts-lodge/programmes`         | Manage programmes              |
 | `ts_lodge.migrate`      | `/ts-lodge/migration`          | Import localStorage data (admin only) |
 
-### REST API endpoints
+### JSON API endpoints
+
+These routes are handled by `TsLodgeApiController` and return `application/json`. Authentication uses Drupal's session cookie + `X-CSRF-Token` header (fetched automatically by `api.js`).
 
 | Method   | Endpoint                          | Description             |
 |----------|-----------------------------------|-------------------------|
@@ -205,8 +202,6 @@ Individual permissions can also be configured at `/admin/people/permissions` und
 | `POST`   | `/api/ts-lodge/programmes`        | Create a programme      |
 | `PATCH`  | `/api/ts-lodge/programmes/{id}`   | Update a programme      |
 | `DELETE` | `/api/ts-lodge/programmes/{id}`   | Delete a programme      |
-
-All endpoints accept and return `application/json`. Append `?_format=json` to all requests. Authentication uses Drupal's session cookie + `X-CSRF-Token` header (handled automatically by `api.js`).
 
 ---
 

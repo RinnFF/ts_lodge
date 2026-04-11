@@ -11,13 +11,10 @@
   --ts-cream:#f5f7f7;
 }
 
-/* ==========================================================
-   All ts_lodge styles scoped to .tslo-wrapper
-   Wrap the module's output in <div class="tslo-wrapper">
-   ========================================================== */
+/*  All ts_lodge styles scoped to .tslo-wrapper
+Wrap the module's output in <div class="tslo-wrapper"> */
 .tslo-wrapper {
   padding: 1rem 1.5rem;
-  /* ---------- CONTAINER ---------- */
 }
 .tslo-wrapper .tslo-container {
   display: block;
@@ -25,9 +22,6 @@
   background: white;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-.tslo-wrapper {
-  /* ---------- FORMULAIRES ---------- */
 }
 .tslo-wrapper form {
   display: flex;
@@ -43,9 +37,6 @@
   border: 1px solid var(--ts-blue-light);
   border-radius: 5px;
   font-size: 14px;
-}
-.tslo-wrapper {
-  /* ---------- TABLEAU ---------- */
 }
 .tslo-wrapper table {
   border-collapse: collapse;
@@ -85,9 +76,6 @@
   border-radius: 8px;
   font-size: 16px;
 }
-.tslo-wrapper {
-  /* Icônes de tri */
-}
 .tslo-wrapper th.sort-asc::after,
 .tslo-wrapper th.sort-desc::after {
   position: absolute;
@@ -100,9 +88,6 @@
 .tslo-wrapper th.sort-desc::after {
   content: "▼";
 }
-.tslo-wrapper {
-  /* Colonnes triables */
-}
 .tslo-wrapper #usersTable th[onclick] {
   padding-right: 26px;
 }
@@ -110,26 +95,14 @@
   background-color: #1f365d;
   cursor: pointer;
 }
-.tslo-wrapper {
-  /* Supprimer l'ancien alterné */
-}
 .tslo-wrapper tr:nth-child(even) {
   background-color: unset;
-}
-.tslo-wrapper {
-  /* Lignes usager */
 }
 .tslo-wrapper .user-row {
   background-color: white;
 }
-.tslo-wrapper {
-  /* Lignes réservation */
-}
 .tslo-wrapper .booking-row td {
   background-color: var(--ts-cream) !important;
-}
-.tslo-wrapper {
-  /* ---------- STATUT ÂGE ---------- */
 }
 .tslo-wrapper .age-ok {
   background-color: var(--ts-green);
@@ -145,9 +118,6 @@
   border-radius: 5px;
   font-weight: bold;
 }
-.tslo-wrapper {
-  /* ---------- BOUTONS GÉNÉRAUX ---------- */
-}
 .tslo-wrapper button {
   border: none;
   padding: 8px 14px;
@@ -157,18 +127,12 @@
   font-weight: bold;
   transition: background-color 0.2s;
 }
-.tslo-wrapper {
-  /* ---------- BOUTON EDIT ---------- */
-}
 .tslo-wrapper .btn-edit {
   background-color: var(--ts-blue-dark);
   color: white;
 }
 .tslo-wrapper .btn-edit:hover {
   background-color: #0d192b;
-}
-.tslo-wrapper {
-  /* ---------- BOUTON BOOK ---------- */
 }
 .tslo-wrapper .btn-book {
   background-color: var(--ts-blue-medium);
@@ -177,9 +141,6 @@
 .tslo-wrapper .btn-book:hover {
   background-color: #084879;
 }
-.tslo-wrapper {
-  /* ---------- BOUTON SUPPRIMER ---------- */
-}
 .tslo-wrapper .btn-delete {
   background-color: var(--ts-orange);
   color: white;
@@ -187,18 +148,12 @@
 .tslo-wrapper .btn-delete:hover {
   background-color: #a84300;
 }
-.tslo-wrapper {
-  /* ---------- BOUTON ENREGISTRER ---------- */
-}
 .tslo-wrapper .btn-save {
   background-color: var(--ts-green);
   color: white;
 }
 .tslo-wrapper .btn-save:hover {
   background-color: #097e79;
-}
-.tslo-wrapper {
-  /* ---------- BOUTON FERMER ---------- */
 }
 .tslo-wrapper .btn-close {
   background-color: var(--ts-orange);
@@ -222,9 +177,6 @@
 .tslo-wrapper .btn-close-program:hover {
   background-color: #a84300;
 }
-.tslo-wrapper {
-  /* ---------- BOUTON AJOUTER USAGER ---------- */
-}
 .tslo-wrapper .btn-add-user {
   background-color: var(--ts-blue-medium);
   color: white;
@@ -244,21 +196,12 @@
   border-radius: 8px;
   font-size: 16px;
 }
-.tslo-wrapper {
-  /* ---------- ESPACEMENT BOUTONS DANS TABLE ---------- */
-}
 .tslo-wrapper td button {
   margin-right: 5px;
-}
-.tslo-wrapper {
-  /* --- findCouch.html styles --- */
 }
 .tslo-wrapper h3 {
   margin-top: 30px;
   color: var(--ts-blue-dark);
-}
-.tslo-wrapper {
-  /* --- Stylisation des groupes --- */
 }
 .tslo-wrapper .groups-container {
   display: flex;
@@ -311,9 +254,6 @@
   background-color: var(--ts-blue-medium);
   color: white;
 }
-.tslo-wrapper {
-  /* Bouton suppression réservation (X) */
-}
 .tslo-wrapper .btn-delete-booking {
   background-color: var(--ts-orange);
   color: white;
@@ -326,9 +266,6 @@
 }
 .tslo-wrapper .btn-delete-booking:hover {
   background-color: #a84300;
-}
-.tslo-wrapper {
-  /* Ligne de récap réservation */
 }
 .tslo-wrapper .booking-details {
   display: flex;
@@ -352,9 +289,6 @@
 .tslo-wrapper .couch-orange {
   background-color: var(--ts-orange) !important;
   color: white !important;
-}
-.tslo-wrapper {
-  /* ---------- BOUTON EDIT RÉSERVATION ---------- */
 }
 .tslo-wrapper .btn-edit-res {
   background-color: var(--ts-blue-dark);
@@ -382,11 +316,6 @@
 .tslo-wrapper #closeBtn, .tslo-wrapper #saveBtn {
   display: block;
   margin: 20px auto;
-}
-.tslo-wrapper {
-  /* =========================================================
-     DASHBOARD – ts-lodge-dashboard.html.twig
-     ========================================================= */
 }
 .tslo-wrapper .ts-lodge-dashboard {
   margin: 0 auto;
@@ -448,9 +377,6 @@
   opacity: 0.88;
   line-height: 1.4;
 }
-.tslo-wrapper {
-  /* Card colour variants */
-}
 .tslo-wrapper .ts-lodge-card--users {
   background-color: var(--ts-blue-medium);
 }
@@ -463,25 +389,16 @@
 .tslo-wrapper .ts-lodge-card--programs {
   background-color: var(--ts-orange);
 }
-.tslo-wrapper {
-  /* wrapper rule for tiny displays */
-}
 .tslo-wrapper .tslo-table-scroll {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-}
-.tslo-wrapper {
-  /* center buttons in cells */
 }
 .tslo-wrapper .tslo-wrapper td:has(> button) {
   text-align: center;
 }
 .tslo-wrapper .tslo-wrapper td:has(> button) button {
   margin: 3px;
-}
-.tslo-wrapper {
-  /* ── TS Lodge – Calendrier des couchages ──────────────────────────────────── */
 }
 .tslo-wrapper .tslo-calendar-section {
   margin-top: 2.5rem;
@@ -493,9 +410,6 @@
   font-weight: 600;
   margin-bottom: 0.75rem;
   color: inherit;
-}
-.tslo-wrapper {
-  /* Navigation bar */
 }
 .tslo-wrapper .tslo-calendar-nav {
   display: flex;
@@ -522,22 +436,13 @@
   min-width: 10rem;
   text-align: center;
 }
-.tslo-wrapper {
-  /* Loading */
-}
 .tslo-wrapper .tslo-calendar-loading {
   color: #888;
   font-style: italic;
   padding: 0.5rem 0;
 }
-.tslo-wrapper {
-  /* Table wrapper – horizontal scroll on small screens */
-}
 .tslo-wrapper .tslo-calendar-grid-wrapper {
   overflow-x: auto;
-}
-.tslo-wrapper {
-  /* Calendar table */
 }
 .tslo-wrapper .tslo-calendar-table {
   width: 100%;
@@ -551,12 +456,9 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #555;
+  color: #ffffff;
   padding: 0.4rem 0.25rem;
   border-bottom: 1px solid #ddd;
-}
-.tslo-wrapper {
-  /* Cells */
 }
 .tslo-wrapper .tslo-cal-day,
 .tslo-wrapper .tslo-cal-empty {
@@ -577,17 +479,11 @@
   margin-bottom: 0.25rem;
   line-height: 1;
 }
-.tslo-wrapper {
-  /* Today highlight */
-}
 .tslo-wrapper .tslo-cal-today {
   background: #fffbea;
 }
 .tslo-wrapper .tslo-cal-today .tslo-cal-day-num {
   color: #c07a00;
-}
-.tslo-wrapper {
-  /* Booking entry pill */
 }
 .tslo-wrapper .tslo-cal-entry {
   display: flex;

@@ -1,23 +1,22 @@
 /* ---------- VARIABLES COULEURS ---------- */
 /* (kept global — already --ts- prefixed, no conflict) */
 :root {
-    --ts-blue-dark: #112940;   
-    --ts-green: #0a7a72;       
-    --ts-gray: #efefef;       
-    --ts-orange: #A64323;      
-    --ts-blue-medium: #0c5ea0; 
-    --ts-blue-light: #72c4ff; 
+    --ts-blue-dark: #112940;
+    --ts-green: #0a7a72;
+    --ts-gray: #efefef;
+    --ts-orange: #A64323;
+    --ts-blue-medium: #0c5ea0;
+    --ts-blue-light: #72c4ff;
     --ts-cream:#f5f7f7;
 }
 
-/* ==========================================================
-   All ts_lodge styles scoped to .tslo-wrapper
-   Wrap the module's output in <div class="tslo-wrapper">
-   ========================================================== */
+/*  All ts_lodge styles scoped to .tslo-wrapper
+Wrap the module's output in <div class="tslo-wrapper"> */
+
 .tslo-wrapper {
   padding: 1rem 1.5rem;
 
-    /* ---------- CONTAINER ---------- */
+    // ---------- CONTAINER ----------
     .tslo-container {
         display: block;
         padding: 20px 30px;
@@ -26,7 +25,7 @@
         box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
     }
 
-    /* ---------- FORMULAIRES ---------- */
+    // ---------- FORMULAIRES ----------
     form {
         display: flex;
         flex-direction: column;
@@ -45,7 +44,7 @@
         font-size: 14px;
     }
 
-    /* ---------- TABLEAU ---------- */
+    // ---------- TABLEAU ----------
     table {
         border-collapse: collapse;
         font-size: 14px;
@@ -90,7 +89,7 @@
         font-size: 16px;
     }
 
-    /* Icônes de tri */
+    // Icônes de tri
     th.sort-asc::after,
     th.sort-desc::after {
         position: absolute;
@@ -101,7 +100,7 @@
     th.sort-asc::after  { content: "▲"; }
     th.sort-desc::after { content: "▼"; }
 
-    /* Colonnes triables */
+    // Colonnes triables
     #usersTable {
         th[onclick] {
             padding-right: 26px;
@@ -113,22 +112,22 @@
         }
     }
 
-    /* Supprimer l'ancien alterné */
+    // Supprimer l'ancien alterné
     tr:nth-child(even) {
         background-color: unset;
     }
 
-    /* Lignes usager */
+    // Lignes usager
     .user-row {
         background-color: white;
     }
 
-    /* Lignes réservation */
+    // Lignes réservation
     .booking-row td {
         background-color: var(--ts-cream) !important;
     }
 
-    /* ---------- STATUT ÂGE ---------- */
+    // ---------- STATUT ÂGE ----------
     .age-ok {
         background-color: var(--ts-green);
         color: white;
@@ -145,7 +144,7 @@
         font-weight: bold;
     }
 
-    /* ---------- BOUTONS GÉNÉRAUX ---------- */
+    // ---------- BOUTONS GÉNÉRAUX ----------
     button {
         border: none;
         padding: 8px 14px;
@@ -156,7 +155,7 @@
         transition: background-color 0.2s;
     }
 
-    /* ---------- BOUTON EDIT ---------- */
+    // ---------- BOUTON EDIT ----------
     .btn-edit {
         background-color: var(--ts-blue-dark);
         color: white;
@@ -164,7 +163,7 @@
         &:hover { background-color: #0d192b; }
     }
 
-    /* ---------- BOUTON BOOK ---------- */
+    // ---------- BOUTON BOOK ----------
     .btn-book {
         background-color: var(--ts-blue-medium);
         color: white;
@@ -172,7 +171,7 @@
         &:hover { background-color: #084879; }
     }
 
-    /* ---------- BOUTON SUPPRIMER ---------- */
+    // ---------- BOUTON SUPPRIMER ----------
     .btn-delete {
         background-color: var(--ts-orange);
         color: white;
@@ -180,7 +179,7 @@
         &:hover { background-color: #a84300; }
     }
 
-    /* ---------- BOUTON ENREGISTRER ---------- */
+    // ---------- BOUTON ENREGISTRER ----------
     .btn-save {
         background-color: var(--ts-green);
         color: white;
@@ -188,7 +187,7 @@
         &:hover { background-color: #097e79; }
     }
 
-    /* ---------- BOUTON FERMER ---------- */
+    // ---------- BOUTON FERMER ----------
     .btn-close {
         background-color: var(--ts-orange);
         color: white;
@@ -211,7 +210,7 @@
         &:hover { background-color: #a84300; }
     }
 
-    /* ---------- BOUTON AJOUTER USAGER ---------- */
+    // ---------- BOUTON AJOUTER USAGER ----------
     .btn-add-user {
         background-color: var(--ts-blue-medium);
         color: white;
@@ -232,18 +231,18 @@
         font-size: 16px;
     }
 
-    /* ---------- ESPACEMENT BOUTONS DANS TABLE ---------- */
+    // ---------- ESPACEMENT BOUTONS DANS TABLE ----------
     td button {
         margin-right: 5px;
     }
 
-    /* --- findCouch.html styles --- */
+    // --- findCouch.html styles ---
     h3 {
         margin-top: 30px;
         color: var(--ts-blue-dark);
     }
 
-    /* --- Stylisation des groupes --- */
+    // --- Stylisation des groupes ---
     .groups-container {
         display: flex;
         flex-wrap: wrap;
@@ -303,7 +302,7 @@
         }
     }
 
-    /* Bouton suppression réservation (X) */
+    // Bouton suppression réservation (X)
     .btn-delete-booking {
         background-color: var(--ts-orange);
         color: white;
@@ -317,7 +316,7 @@
         &:hover { background-color: #a84300; }
     }
 
-    /* Ligne de récap réservation */
+    // Ligne de récap réservation
     .booking-details {
         display: flex;
         align-items: center;
@@ -345,7 +344,7 @@
         color: white !important;
     }
 
-    /* ---------- BOUTON EDIT RÉSERVATION ---------- */
+    // ---------- BOUTON EDIT RÉSERVATION ----------
     .btn-edit-res {
         background-color: var(--ts-blue-dark);
         color: white;
@@ -376,9 +375,7 @@
         margin: 20px auto;
     }
 
-    /* =========================================================
-       DASHBOARD – ts-lodge-dashboard.html.twig
-       ========================================================= */
+    // DASHBOARD – ts-lodge-dashboard.html.twig
 
     .ts-lodge-dashboard {
         margin: 0 auto;
@@ -421,7 +418,7 @@
         color: white;
         transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
         box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 14px;
-        cursor: pointer;  
+        cursor: pointer;
 
         &:hover {
             transform: translateY(-4px);
@@ -450,19 +447,19 @@
         line-height: 1.4;
     }
 
-    /* Card colour variants */
+    // Card colour variants
     .ts-lodge-card--users    { background-color: var(--ts-blue-medium); }
     .ts-lodge-card--add      { background-color: var(--ts-green); }
     .ts-lodge-card--couches  { background-color: var(--ts-blue-dark); }
     .ts-lodge-card--programs { background-color: var(--ts-orange); }
 
-    /* wrapper rule for tiny displays */
+    // wrapper rule for tiny displays
     .tslo-table-scroll {
         width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
-    /* center buttons in cells */
+    // center buttons in cells
     .tslo-wrapper td:has(> button) {
         text-align: center;
 
@@ -470,7 +467,7 @@
             margin: 3px;
         }
     }
-    /* ── TS Lodge – Calendrier des couchages ──────────────────────────────────── */
+    // TS Lodge – Calendrier des couchages
 
     .tslo-calendar-section {
         margin-top: 2.5rem;
@@ -485,7 +482,7 @@
         color: inherit;
     }
 
-/* Navigation bar */
+    // Navigation bar
     .tslo-calendar-nav {
         display: flex;
         align-items: center;
@@ -515,19 +512,19 @@
         text-align: center;
     }
 
-/* Loading */
+    // Loading
     .tslo-calendar-loading {
         color: #888;
         font-style: italic;
         padding: 0.5rem 0;
     }
 
-/* Table wrapper – horizontal scroll on small screens */
+    // Table wrapper – horizontal scroll on small screens
     .tslo-calendar-grid-wrapper {
         overflow-x: auto;
     }
 
-/* Calendar table */
+    // Calendar table
     .tslo-calendar-table {
         width: 100%;
         border-collapse: collapse;
@@ -541,12 +538,12 @@
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: #555;
+        color: #ffffff;
         padding: 0.4rem 0.25rem;
         border-bottom: 1px solid #ddd;
     }
 
-/* Cells */
+    // Cells
     .tslo-cal-day,
     .tslo-cal-empty {
         vertical-align: top;
@@ -569,7 +566,7 @@
         line-height: 1;
     }
 
-/* Today highlight */
+    // Today highlight
     .tslo-cal-today {
         background: #fffbea;
     }
@@ -578,7 +575,7 @@
         color: #c07a00;
     }
 
-/* Booking entry pill */
+    // Booking entry pill
     .tslo-cal-entry {
         display: flex;
         align-items: baseline;
