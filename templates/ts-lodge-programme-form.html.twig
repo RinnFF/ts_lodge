@@ -12,8 +12,8 @@
 
 <h3>{{ isEdit ? 'Modifier un programme' : 'Ajouter un programme' }}</h3>
 <form {% if isEdit %}hx-patch{% else %}hx-post{% endif %}="{{ formAction }}"
-      hx-target="#programsTable tbody"
-      hx-swap="innerHTML">
+      hx-target="#programsTableBody"
+      hx-swap="outerHTML">
 
   <label>Catégorie</label>
   <select name="category" required>

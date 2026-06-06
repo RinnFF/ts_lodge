@@ -5,6 +5,7 @@
  * Variables: programmes (array)
  */
 #}
+<tbody id="programsTableBody">
 {% for p in programmes %}
 <tr>
   <td>{{ p.category }}</td>
@@ -18,10 +19,11 @@
     <button class="btn-delete"
       hx-delete="{{ path('ts_lodge.htmx.programme', {id: p.id}) }}"
       hx-confirm="Supprimer ce programme ?"
-      hx-target="#programsTable tbody"
-      hx-swap="innerHTML">Supprimer</button>
+      hx-target="#programsTableBody"
+      hx-swap="outerHTML">Supprimer</button>
   </td>
 </tr>
 {% else %}
 <tr><td colspan="4">Aucun programme enregistré.</td></tr>
 {% endfor %}
+</tbody>

@@ -15,24 +15,24 @@
     <thead id="usersTableHead">
       <tr>
         <th hx-get="{{ path('ts_lodge.htmx.users_rows') }}?sort=lastName"
-            hx-target="#usersTable tbody" hx-swap="innerHTML"
+            hx-target="#usersTableBody" hx-swap="outerHTML"
             style="cursor:pointer">Nom</th>
         <th hx-get="{{ path('ts_lodge.htmx.users_rows') }}?sort=firstName"
-            hx-target="#usersTable tbody" hx-swap="innerHTML"
+            hx-target="#usersTableBody" hx-swap="outerHTML"
             style="cursor:pointer">Prénom</th>
         <th>Genre</th>
         <th hx-get="{{ path('ts_lodge.htmx.users_rows') }}?sort=birthDate"
-            hx-target="#usersTable tbody" hx-swap="innerHTML"
+            hx-target="#usersTableBody" hx-swap="outerHTML"
             style="cursor:pointer">Date de naissance</th>
         <th>Âge</th>
         <th>Actions</th>
         <th>Séjour</th>
       </tr>
     </thead>
-    <tbody
+    <tbody id="usersTableBody"
       hx-get="{{ path('ts_lodge.htmx.users_rows') }}"
       hx-trigger="load"
-      hx-swap="innerHTML">
+      hx-swap="outerHTML">
       <tr><td colspan="7">Chargement…</td></tr>
     </tbody>
   </table>

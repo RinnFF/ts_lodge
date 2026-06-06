@@ -26,10 +26,10 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody
+    <tbody id="programsTableBody"
       hx-get="{{ path('ts_lodge.htmx.programmes_rows') }}"
       hx-trigger="load"
-      hx-swap="innerHTML">
+      hx-swap="outerHTML">
       <tr><td colspan="4">Chargement…</td></tr>
     </tbody>
   </table>

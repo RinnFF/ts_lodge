@@ -5,6 +5,7 @@
  * Variables: users (array), sort (string), dir (string)
  */
 #}
+<tbody id="usersTableBody">
 {% for user in users %}
 <tr class="user-row">
   <td>{{ user.lastName }}</td>
@@ -18,8 +19,8 @@
     <button class="btn-delete"
       hx-delete="{{ path('ts_lodge.htmx.usager', {id: user.id}) }}"
       hx-confirm="Supprimer {{ user.firstName }} {{ user.lastName }} ?"
-      hx-target="#usersTable tbody"
-      hx-swap="innerHTML">Supprimer</button>
+      hx-target="#usersTableBody"
+      hx-swap="outerHTML">Supprimer</button>
   </td>
 </tr>
 {% if user.booking %}
@@ -36,8 +37,8 @@
         <button class="btn-delete-booking"
           hx-delete="{{ path('ts_lodge.htmx.booking', {id: user.booking.id}) }}"
           hx-confirm="Supprimer cette réservation ?"
-          hx-target="#usersTable tbody"
-          hx-swap="innerHTML">X</button>
+          hx-target="#usersTableBody"
+          hx-swap="outerHTML">X</button>
       </div>
     </div>
   </td>
@@ -46,3 +47,4 @@
 {% else %}
 <tr><td colspan="7">Aucun usager enregistré.</td></tr>
 {% endfor %}
+</tbody>
