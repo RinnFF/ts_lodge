@@ -2,7 +2,8 @@
 /**
  * @file
  * ts-lodge-programs.html.twig
- * The programme list rows and the add/edit form are loaded/swapped by HTMX.
+ * Variables: programmes_rows (render array – pre-rendered tbody, also replaced by
+ * HTMX on save/delete via #programsTableBody outerHTML swap)
  */
 #}
 <div class="tslo-wrapper">
@@ -26,12 +27,7 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody id="programsTableBody"
-      hx-get="{{ path('ts_lodge.htmx.programmes_rows') }}"
-      hx-trigger="load"
-      hx-swap="outerHTML">
-      <tr><td colspan="4">Chargement…</td></tr>
-    </tbody>
+    {{ programmes_rows }}
   </table>
 
   <div id="programFormContainer" style="margin-top:20px;"></div>

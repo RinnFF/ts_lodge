@@ -12,7 +12,7 @@ function ts_lodge_theme(): array {
   return [
     // ── Full pages ──────────────────────────────────────────────────────────
     'ts_lodge_dashboard'  => ['template' => 'ts-lodge-dashboard',  'variables' => []],
-    'ts_lodge_users'      => ['template' => 'ts-lodge-users',      'variables' => []],
+    'ts_lodge_users'      => ['template' => 'ts-lodge-users',      'variables' => ['users_rows' => NULL]],
     'ts_lodge_add_user'   => ['template' => 'ts-lodge-add-user',   'variables' => []],
     'ts_lodge_edit_user'  => [
       'template'  => 'ts-lodge-edit-user',
@@ -27,7 +27,7 @@ function ts_lodge_theme(): array {
       'variables' => ['userId' => NULL, 'bookingId' => NULL],
     ],
     'ts_lodge_couches'    => ['template' => 'ts-lodge-couches',    'variables' => []],
-    'ts_lodge_programs'   => ['template' => 'ts-lodge-programs',   'variables' => []],
+    'ts_lodge_programs'   => ['template' => 'ts-lodge-programs',   'variables' => ['programmes_rows' => NULL]],
 
     // ── HTMX partials ───────────────────────────────────────────────────────
     'ts_lodge_users_rows'  => [

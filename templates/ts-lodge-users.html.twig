@@ -2,6 +2,8 @@
 /**
  * @file
  * ts-lodge-users.html.twig
+ * Variables: users_rows (render array – pre-rendered tbody, also replaced by
+ * HTMX on sort/delete via #usersTableBody outerHTML swap)
  */
 #}
 <div class="tslo-wrapper">
@@ -29,12 +31,7 @@
         <th>Séjour</th>
       </tr>
     </thead>
-    <tbody id="usersTableBody"
-      hx-get="{{ path('ts_lodge.htmx.users_rows') }}"
-      hx-trigger="load"
-      hx-swap="outerHTML">
-      <tr><td colspan="7">Chargement…</td></tr>
-    </tbody>
+    {{ users_rows }}
   </table>
 </div>
 </div>

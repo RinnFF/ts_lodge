@@ -22,9 +22,40 @@ class TsLodgeController extends ControllerBase {
   }
 
   public function users(): array {
+    $ids     = \Drupal::entityQuery('ts_lodge_usager')->accessCheck(TRUE)->execute();
+    $usagers = TsLodgeUsager::loadMultiple($ids);
+
+    $bids    = \Drupal::entityQuery('ts_lodge_booking')->accessCheck(TRUE)->execute();
+    $bookings = TsLodgeBooking::loadMultiple($bids);
+
+    $bookingMap = [];
+    foreach ($bookings as $b) {
+      $uid = (int) $b->get('usager_id')->target_id;
+      if (!isset($bookingMap[$uid])) {
+        $bookingMap[$uid] = $b;
+      }
+    }
+
+    $users = [];
+    foreach ($usagers as $u) {
+      $row            = $this->serializeUsager($u);
+      $booking        = $bookingMap[(int) $u->id()] ?? NULL;
+      $row['booking'] = $booking ? $this->serializeBooking($booking) : NULL;
+      $users[]        = $row;
+    }
+    usort($users, fn(array $a, array $b): int => strcmp((string) ($a['lastName'] ?? ''), (string) ($b['lastName'] ?? '')));
+
     return [
-      '#theme'    => 'ts_lodge_users',
-      '#attached' => ['library' => ['ts_lodge/global']],
+      '#theme'       => 'ts_lodge_users',
+      '#users_rows'  => [
+        '#theme' => 'ts_lodge_users_rows',
+        '#users' => $users,
+        '#sort'  => 'lastName',
+        '#dir'   => 'asc',
+        '#cache' => ['max-age' => 0],
+      ],
+      '#attached'    => ['library' => ['ts_lodge/global']],
+      '#cache'       => ['max-age' => 0],
     ];
   }
 
@@ -89,9 +120,19 @@ class TsLodgeController extends ControllerBase {
   }
 
   public function programs(): array {
+    $ids      = \Drupal::entityQuery('ts_lodge_programme')->accessCheck(TRUE)->execute();
+    $entities = TsLodgeProgramme::loadMultiple($ids);
+    $programmes = array_values(array_map([$this, 'serializeProgramme'], $entities));
+
     return [
-      '#theme'    => 'ts_lodge_programs',
-      '#attached' => ['library' => ['ts_lodge/global']],
+      '#theme'            => 'ts_lodge_programs',
+      '#programmes_rows'  => [
+        '#theme'      => 'ts_lodge_programmes_rows',
+        '#programmes' => $programmes,
+        '#cache'      => ['max-age' => 0],
+      ],
+      '#attached'         => ['library' => ['ts_lodge/global']],
+      '#cache'            => ['max-age' => 0],
     ];
   }
 
