@@ -56,9 +56,7 @@ ts_lodge/
 ├── css/
 │   └── style.css
 └── js/
-    ├── vendor/
-    │   └── htmx.min.js   # ← must be downloaded separately (see Installation)
-    ├── htmx-init.js      # CSRF token handler + error display (25 lines)
+    ├── htmx-init.js      # CSRF token handler + error display
     └── calendar.js       # Couch occupancy calendar view
 ```
 

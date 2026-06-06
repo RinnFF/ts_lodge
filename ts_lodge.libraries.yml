@@ -1,15 +1,12 @@
-# htmx 2.0.10 – bundled at this fixed version.
-# To upgrade: curl -Lo js/vendor/htmx.min.js https://unpkg.com/htmx.org@<version>/dist/htmx.min.js
-
 global:
   css:
     theme:
       css/style.css: {}
   js:
-    js/vendor/htmx.min.js: { minified: true }
     js/htmx-init.js: {}
   dependencies:
     - core/drupal
+    - core/htmx
 
 calendar:
   js:

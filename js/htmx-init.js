@@ -1,8 +1,7 @@
-// Guard against double-init (e.g. if the Drupal htmx contrib module is also
-// installed and aggregates its own init alongside ours).
-if (!window._tsLodgeHtmxInit) {
-  window._tsLodgeHtmxInit = true;
-
+// Fetch the Drupal CSRF token once so it is ready before any write fires.
+// Routes currently enforce _permission checks rather than _csrf_token, but
+// this header is sent as a precaution for any future routes that require it.
+(() => {
   let _token = null;
   fetch('/session/token', { credentials: 'same-origin' })
     .then(r => r.text())
@@ -14,7 +13,7 @@ if (!window._tsLodgeHtmxInit) {
     }
   });
 
-  // Surface server-side validation errors (HTTP 4xx) into #formError if present.
+  // Surface server-side validation errors (HTTP 4xx) into #formError.
   document.body.addEventListener('htmx:responseError', e => {
     const el = document.getElementById('formError');
     if (el) {
@@ -22,4 +21,4 @@ if (!window._tsLodgeHtmxInit) {
       el.style.display = 'block';
     }
   });
-}
+})();
