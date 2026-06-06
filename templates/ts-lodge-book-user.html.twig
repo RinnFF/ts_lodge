@@ -52,6 +52,12 @@
     <div id="btnContainer">
       <button type="submit" class="btn-save">Trouver un couchage</button>
       <a href="{{ path('ts_lodge.users') }}" class="btn-close">Retour</a>
+      {% if isEdit %}
+      <button type="button" class="btn-cancel-stay"
+        hx-delete="{{ path('ts_lodge.htmx.booking', {id: booking.id}) }}"
+        hx-confirm="Annuler ce séjour ? Cette action est irréversible."
+        hx-target="body">Annuler le séjour</button>
+      {% endif %}
     </div>
   </form>
 </div>

@@ -522,4 +522,94 @@ Wrap the module's output in <div class="tslo-wrapper"> */
   font-weight: 500;
 }
 
+/* ── User stays accordion ─────────────────────────────────────────────────── */
+.tslo-wrapper .stays-row td {
+  padding: 0;
+  border-top: none;
+  background-color: var(--ts-cream);
+}
+.tslo-wrapper .stays-accordion {
+  padding: 0;
+}
+.tslo-wrapper .stays-summary {
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #555;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+}
+.tslo-wrapper .stays-summary::before {
+  content: '▶';
+  font-size: 10px;
+  transition: transform 0.15s;
+  color: #999;
+}
+.tslo-wrapper details[open] > .stays-summary::before {
+  transform: rotate(90deg);
+}
+.tslo-wrapper .stays-summary::-webkit-details-marker { display: none; }
+.tslo-wrapper .stay-badge {
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+.tslo-wrapper .stay-badge--current {
+  background-color: var(--ts-green);
+  color: white;
+}
+.tslo-wrapper .stays-list {
+  padding: 4px 15px 10px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.tslo-wrapper .stay {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 5px 10px;
+  border-left: 3px solid var(--ts-blue-light);
+  border-radius: 3px;
+  background: white;
+  font-size: 13px;
+}
+.tslo-wrapper .stay--current {
+  border-left-color: var(--ts-green);
+  background: #f0faf9;
+}
+.tslo-wrapper .stay--past {
+  border-left-color: #ccc;
+  color: #999;
+}
+.tslo-wrapper .stay--past .btn-edit-res {
+  opacity: 0.6;
+}
+.tslo-wrapper .stay-prog {
+  font-weight: bold;
+  min-width: 60px;
+}
+.tslo-wrapper .stay-dates {
+  color: #444;
+  white-space: nowrap;
+}
+.tslo-wrapper .stay--past .stay-dates {
+  color: #aaa;
+}
+.tslo-wrapper .stay-couch {
+  color: #666;
+  white-space: nowrap;
+}
+.tslo-wrapper .btn-cancel-stay {
+  background-color: var(--ts-orange);
+  color: white;
+}
+.tslo-wrapper .btn-cancel-stay:hover {
+  background-color: #a84300;
+}
+
 /*# sourceMappingURL=style.css.map */

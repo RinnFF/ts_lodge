@@ -21,43 +21,9 @@ class TsLodgeHtmxController extends TsLodgeController {
   // ── Users rows ──────────────────────────────────────────────────────────────
 
   public function usersRows(Request $request): Response {
-    $sort = $request->query->get('sort', 'lastName');
-    $dir  = $request->query->get('dir',  'asc');
-
-    $ids     = \Drupal::entityQuery('ts_lodge_usager')->accessCheck(TRUE)->execute();
-    $usagers = TsLodgeUsager::loadMultiple($ids);
-
-    $bids     = \Drupal::entityQuery('ts_lodge_booking')->accessCheck(TRUE)->execute();
-    $bookings = TsLodgeBooking::loadMultiple($bids);
-
-    $bookingMap = [];
-    foreach ($bookings as $b) {
-      $uid = (int) $b->get('usager_id')->target_id;
-      if (!isset($bookingMap[$uid])) {
-        $bookingMap[$uid] = $b;
-      }
-    }
-
-    $users = [];
-    foreach ($usagers as $u) {
-      $row           = $this->serializeUsager($u);
-      $booking       = $bookingMap[(int) $u->id()] ?? NULL;
-      $row['booking'] = $booking ? $this->serializeBooking($booking) : NULL;
-      $users[]        = $row;
-    }
-
-    // Sort. closestDate sorts by arrivalDate as a proxy.
-    $validSorts = ['lastName', 'firstName', 'gender', 'birthDate'];
-    if (!in_array($sort, $validSorts, TRUE)) {
-      $sort = 'lastName';
-    }
-
-    usort($users, function (array $a, array $b) use ($sort, $dir): int {
-      $valA = $a[$sort] ?? '';
-      $valB = $b[$sort] ?? '';
-      $cmp  = strcmp((string) $valA, (string) $valB);
-      return $dir === 'desc' ? -$cmp : $cmp;
-    });
+    $sort  = $request->query->get('sort', 'lastName');
+    $dir   = $request->query->get('dir',  'asc');
+    $users = $this->buildUserRows($sort, $dir);
 
     return $this->renderPartial('ts_lodge_users_rows', [
       '#users' => $users,

@@ -22,41 +22,87 @@ class TsLodgeController extends ControllerBase {
   }
 
   public function users(): array {
-    $ids     = \Drupal::entityQuery('ts_lodge_usager')->accessCheck(TRUE)->execute();
-    $usagers = TsLodgeUsager::loadMultiple($ids);
-
-    $bids    = \Drupal::entityQuery('ts_lodge_booking')->accessCheck(TRUE)->execute();
-    $bookings = TsLodgeBooking::loadMultiple($bids);
-
-    $bookingMap = [];
-    foreach ($bookings as $b) {
-      $uid = (int) $b->get('usager_id')->target_id;
-      if (!isset($bookingMap[$uid])) {
-        $bookingMap[$uid] = $b;
-      }
-    }
-
-    $users = [];
-    foreach ($usagers as $u) {
-      $row            = $this->serializeUsager($u);
-      $booking        = $bookingMap[(int) $u->id()] ?? NULL;
-      $row['booking'] = $booking ? $this->serializeBooking($booking) : NULL;
-      $users[]        = $row;
-    }
-    usort($users, fn(array $a, array $b): int => strcmp((string) ($a['lastName'] ?? ''), (string) ($b['lastName'] ?? '')));
-
+    $users = $this->buildUserRows();
     return [
-      '#theme'       => 'ts_lodge_users',
-      '#users_rows'  => [
+      '#theme'      => 'ts_lodge_users',
+      '#users_rows' => [
         '#theme' => 'ts_lodge_users_rows',
         '#users' => $users,
         '#sort'  => 'lastName',
         '#dir'   => 'asc',
         '#cache' => ['max-age' => 0],
       ],
-      '#attached'    => ['library' => ['ts_lodge/global']],
-      '#cache'       => ['max-age' => 0],
+      '#attached'   => ['library' => ['ts_lodge/global']],
+      '#cache'      => ['max-age' => 0],
     ];
+  }
+
+  /**
+   * Loads all usagers with their full booking history, sorted and status-tagged.
+   *
+   * Stay status: current (on-site today) → future → past.
+   * Within future: ascending arrival. Within past: descending departure.
+   */
+  protected function buildUserRows(string $sort = 'lastName', string $dir = 'asc'): array {
+    $ids      = \Drupal::entityQuery('ts_lodge_usager')->accessCheck(TRUE)->execute();
+    $usagers  = TsLodgeUsager::loadMultiple($ids);
+
+    $bids     = \Drupal::entityQuery('ts_lodge_booking')->accessCheck(TRUE)->execute();
+    $bookings = TsLodgeBooking::loadMultiple($bids);
+
+    $bookingMap = [];
+    foreach ($bookings as $b) {
+      $uid = (int) $b->get('usager_id')->target_id;
+      $bookingMap[$uid][] = $b;
+    }
+
+    $today = new \DateTime('today');
+    $users = [];
+    foreach ($usagers as $u) {
+      $row = $this->serializeUsager($u);
+      $uid = (int) $u->id();
+      $row['bookings'] = [];
+
+      if (isset($bookingMap[$uid])) {
+        $serialized = array_map([$this, 'serializeBooking'], $bookingMap[$uid]);
+        foreach ($serialized as &$bk) {
+          $arrival   = $bk['arrivalDate']   ? new \DateTime($bk['arrivalDate'])   : NULL;
+          $departure = $bk['departureDate'] ? new \DateTime($bk['departureDate']) : NULL;
+          if ($arrival && $departure && $today >= $arrival && $today < $departure) {
+            $bk['status'] = 'current';
+            $bk['sortOrder'] = 0;
+          } elseif (!$arrival || $arrival > $today) {
+            $bk['status'] = 'future';
+            $bk['sortOrder'] = 1;
+          } else {
+            $bk['status'] = 'past';
+            $bk['sortOrder'] = 2;
+          }
+        }
+        unset($bk);
+        usort($serialized, function (array $a, array $b): int {
+          if ($a['sortOrder'] !== $b['sortOrder']) {
+            return $a['sortOrder'] <=> $b['sortOrder'];
+          }
+          return $a['status'] === 'past'
+            ? strcmp($b['departureDate'], $a['departureDate'])   // past: DESC
+            : strcmp($a['arrivalDate'],   $b['arrivalDate']);     // future/current: ASC
+        });
+        $row['bookings'] = $serialized;
+      }
+      $users[] = $row;
+    }
+
+    $validSorts = ['lastName', 'firstName', 'gender', 'birthDate'];
+    if (!in_array($sort, $validSorts, TRUE)) {
+      $sort = 'lastName';
+    }
+    usort($users, function (array $a, array $b) use ($sort, $dir): int {
+      $cmp = strcmp((string) ($a[$sort] ?? ''), (string) ($b[$sort] ?? ''));
+      return $dir === 'desc' ? -$cmp : $cmp;
+    });
+
+    return $users;
   }
 
   public function addUser(): array {

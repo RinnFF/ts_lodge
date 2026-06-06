@@ -2,8 +2,6 @@
 /**
  * @file
  * ts-lodge-users.html.twig
- * Variables: users_rows (render array – pre-rendered tbody, also replaced by
- * HTMX on sort/delete via #usersTableBody outerHTML swap)
  */
 #}
 <div class="tslo-wrapper">
@@ -28,7 +26,6 @@
             style="cursor:pointer">Date de naissance</th>
         <th>Âge</th>
         <th>Actions</th>
-        <th>Séjour</th>
       </tr>
     </thead>
     {{ users_rows }}

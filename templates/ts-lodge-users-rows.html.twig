@@ -1,8 +1,8 @@
 {#
 /**
  * @file
- * ts-lodge-users-rows.html.twig – HTMX partial: users table <tbody> rows.
- * Variables: users (array), sort (string), dir (string)
+ * ts-lodge-users-rows.html.twig – HTMX partial: users <tbody>.
+ * Variables: users (array with bookings[] per user), sort, dir
  */
 #}
 <tbody id="usersTableBody">
@@ -13,38 +13,41 @@
   <td>{{ user.gender }}{% if user.isCouple %} <span class="couple-badge">&#10084;&#65039;</span>{% endif %}</td>
   <td>{{ user.birthDate }}</td>
   <td><span class="{{ user.ageClass }}">{{ user.ageStatus }}</span></td>
-  <td>
-    <a href="{{ path('ts_lodge.edit_user', {id: user.id}) }}" class="btn-edit">Edit</a>
-    <a href="{{ path('ts_lodge.book_user', {userId: user.id}) }}" class="btn-book">Book</a>
-    <button class="btn-delete"
-      hx-delete="{{ path('ts_lodge.htmx.usager', {id: user.id}) }}"
-      hx-confirm="Supprimer {{ user.firstName }} {{ user.lastName }} ?"
-      hx-target="#usersTableBody"
-      hx-swap="outerHTML">Supprimer</button>
+  <td class="user-actions">
+    <a href="{{ path('ts_lodge.edit_user', {id: user.id}) }}" class="btn-edit">Modifier usager</a>
+    <a href="{{ path('ts_lodge.book_user', {userId: user.id}) }}" class="btn-book">Ajouter un séjour</a>
   </td>
 </tr>
-{% if user.booking %}
-<tr class="booking-row">
-  <td colspan="7">
-    <div class="booking-details">
-      <strong>Programme :</strong> {{ user.booking.programmeCode ?: '—' }} |
-      <strong>Arrivée :</strong> {{ user.booking.arrivalDate }} |
-      <strong>Départ :</strong> {{ user.booking.departureDate }} |
-      <strong>Couchage :</strong> {{ user.booking.couch ?: 'Non attribué' }}
-      <div style="margin-left:auto;display:flex;gap:5px;">
-        <a href="{{ path('ts_lodge.book_user', {userId: user.id}) }}?booking={{ user.booking.id }}"
-           class="btn-edit-res">Edit</a>
-        <button class="btn-delete-booking"
-          hx-delete="{{ path('ts_lodge.htmx.booking', {id: user.booking.id}) }}"
-          hx-confirm="Supprimer cette réservation ?"
-          hx-target="#usersTableBody"
-          hx-swap="outerHTML">X</button>
+<tr class="stays-row">
+  <td colspan="6">
+    <details class="stays-accordion">
+      <summary class="stays-summary">
+        {%- set nb = user.bookings|length -%}
+        {%- if nb == 0 -%}Aucun séjour
+        {%- elseif nb == 1 -%}1 séjour
+        {%- else -%}{{ nb }} séjours
+        {%- endif -%}
+        {%- set hasActive = false -%}
+        {%- for bk in user.bookings -%}{%- if bk.status == 'current' -%}{%- set hasActive = true -%}{%- endif -%}{%- endfor -%}
+        {% if hasActive %}&ensp;<span class="stay-badge stay-badge--current">En cours</span>{% endif %}
+      </summary>
+      {% if user.bookings %}
+      <div class="stays-list">
+        {% for bk in user.bookings %}
+        <div class="stay stay--{{ bk.status }}">
+          <span class="stay-prog">{{ bk.programmeCode ?: '—' }}</span>
+          <span class="stay-dates">{{ bk.arrivalDate }} → {{ bk.departureDate }}</span>
+          <span class="stay-couch">🛏 {{ bk.couch ?: 'Lit non attribué' }}</span>
+          <a href="{{ path('ts_lodge.book_user', {userId: user.id}) }}?booking={{ bk.id }}"
+             class="btn-edit-res">Modifier le séjour</a>
+        </div>
+        {% endfor %}
       </div>
-    </div>
+      {% endif %}
+    </details>
   </td>
 </tr>
-{% endif %}
 {% else %}
-<tr><td colspan="7">Aucun usager enregistré.</td></tr>
+<tr><td colspan="6">Aucun usager enregistré.</td></tr>
 {% endfor %}
 </tbody>
