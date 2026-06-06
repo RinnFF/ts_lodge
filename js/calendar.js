@@ -36,8 +36,8 @@
       let bookings = null;
 
       Promise.all([
-        TsApi.getUsagers(),
-        TsApi.getBookings(),
+        fetch('/api/ts-lodge/usagers', { credentials: 'same-origin' }).then(r => r.json()),
+        fetch('/api/ts-lodge/bookings', { credentials: 'same-origin' }).then(r => r.json()),
       ]).then(([u, b]) => {
         usagers  = u;
         bookings = b;
