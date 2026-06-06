@@ -1,0 +1,48 @@
+{#
+/**
+ * @file
+ * ts-lodge-users-rows.html.twig – HTMX partial: users table <tbody> rows.
+ * Variables: users (array), sort (string), dir (string)
+ */
+#}
+{% for user in users %}
+<tr class="user-row">
+  <td>{{ user.lastName }}</td>
+  <td>{{ user.firstName }}</td>
+  <td>{{ user.gender }}{% if user.isCouple %} <span class="couple-badge">&#10084;&#65039;</span>{% endif %}</td>
+  <td>{{ user.birthDate }}</td>
+  <td><span class="{{ user.ageClass }}">{{ user.ageStatus }}</span></td>
+  <td>
+    <a href="{{ path('ts_lodge.edit_user', {id: user.id}) }}" class="btn-edit">Edit</a>
+    <a href="{{ path('ts_lodge.book_user', {userId: user.id}) }}" class="btn-book">Book</a>
+    <button class="btn-delete"
+      hx-delete="{{ path('ts_lodge.htmx.usager', {id: user.id}) }}"
+      hx-confirm="Supprimer {{ user.firstName }} {{ user.lastName }} ?"
+      hx-target="#usersTable tbody"
+      hx-swap="innerHTML">Supprimer</button>
+  </td>
+</tr>
+{% if user.booking %}
+<tr class="booking-row">
+  <td colspan="7">
+    <div class="booking-details">
+      <strong>Programme :</strong> {{ user.booking.programmeCode ?: '—' }} |
+      <strong>Arrivée :</strong> {{ user.booking.arrivalDate }} |
+      <strong>Départ :</strong> {{ user.booking.departureDate }} |
+      <strong>Couchage :</strong> {{ user.booking.couch ?: 'Non attribué' }}
+      <div style="margin-left:auto;display:flex;gap:5px;">
+        <a href="{{ path('ts_lodge.book_user', {userId: user.id}) }}?booking={{ user.booking.id }}"
+           class="btn-edit-res">Edit</a>
+        <button class="btn-delete-booking"
+          hx-delete="{{ path('ts_lodge.htmx.booking', {id: user.booking.id}) }}"
+          hx-confirm="Supprimer cette réservation ?"
+          hx-target="#usersTable tbody"
+          hx-swap="innerHTML">X</button>
+      </div>
+    </div>
+  </td>
+</tr>
+{% endif %}
+{% else %}
+<tr><td colspan="7">Aucun usager enregistré.</td></tr>
+{% endfor %}

@@ -10,23 +10,52 @@
  */
 function ts_lodge_theme(): array {
   return [
+    // ── Full pages ──────────────────────────────────────────────────────────
     'ts_lodge_dashboard'  => ['template' => 'ts-lodge-dashboard',  'variables' => []],
     'ts_lodge_users'      => ['template' => 'ts-lodge-users',      'variables' => []],
     'ts_lodge_add_user'   => ['template' => 'ts-lodge-add-user',   'variables' => []],
-    'ts_lodge_edit_user'  => ['template' => 'ts-lodge-edit-user',  'variables' => []],
-    'ts_lodge_book_user'  => ['template' => 'ts-lodge-book-user',  'variables' => []],
-    'ts_lodge_find_couch' => ['template' => 'ts-lodge-find-couch', 'variables' => []],
+    'ts_lodge_edit_user'  => [
+      'template'  => 'ts-lodge-edit-user',
+      'variables' => ['user' => NULL],
+    ],
+    'ts_lodge_book_user'  => [
+      'template'  => 'ts-lodge-book-user',
+      'variables' => ['user' => NULL, 'booking' => NULL, 'programmes' => []],
+    ],
+    'ts_lodge_find_couch' => [
+      'template'  => 'ts-lodge-find-couch',
+      'variables' => ['userId' => NULL, 'bookingId' => NULL],
+    ],
     'ts_lodge_couches'    => ['template' => 'ts-lodge-couches',    'variables' => []],
     'ts_lodge_programs'   => ['template' => 'ts-lodge-programs',   'variables' => []],
+
+    // ── HTMX partials ───────────────────────────────────────────────────────
+    'ts_lodge_users_rows'  => [
+      'template'  => 'ts-lodge-users-rows',
+      'variables' => ['users' => [], 'sort' => 'lastName', 'dir' => 'asc'],
+    ],
+    'ts_lodge_find_couch_buttons' => [
+      'template'  => 'ts-lodge-find-couch-buttons',
+      'variables' => ['couches' => [], 'userId' => NULL, 'bookingId' => NULL],
+    ],
+    'ts_lodge_couches_content' => [
+      'template'  => 'ts-lodge-couches-content',
+      'variables' => ['occupants' => [], 'date' => ''],
+    ],
+    'ts_lodge_programmes_rows' => [
+      'template'  => 'ts-lodge-programmes-rows',
+      'variables' => ['programmes' => []],
+    ],
+    'ts_lodge_programme_form' => [
+      'template'  => 'ts-lodge-programme-form',
+      'variables' => ['programme' => NULL],
+    ],
   ];
 }
 
 /**
  * Implements hook_views_data_alter().
- *
- * Ensures all three TS Lodge entity types are available in Views.
  */
 function ts_lodge_views_data_alter(array &$data): void {
   // Relationships are declared in the EntityViewsData handlers.
-  // This hook is available for any additional cross-entity tweaks.
 }

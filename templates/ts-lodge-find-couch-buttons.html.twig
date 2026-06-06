@@ -1,0 +1,43 @@
+{#
+/**
+ * @file
+ * ts-lodge-find-couch-buttons.html.twig – HTMX partial: couch selection buttons.
+ * Variables: couches (array), userId (int), bookingId (int)
+ *
+ * Each couch has: name, cssClass, selected, blocked, group.
+ * CSS classes: couch-blue (free), couch-green (same programme), couch-orange (blocked/incompatible).
+ */
+#}
+{% set groups = {} %}
+{% for couch in couches %}
+  {# Build a map of group → [couches] #}
+  {% if groups[couch.group] is defined %}
+    {% set groups = groups|merge({(couch.group): groups[couch.group]|merge([couch])}) %}
+  {% else %}
+    {% set groups = groups|merge({(couch.group): [couch]}) %}
+  {% endif %}
+{% endfor %}
+
+{% for groupName, groupCouches in groups %}
+  {% set firstLetter = groupCouches[0].name|slice(0,1)|lower %}
+  {% set groupClass = firstLetter == 'b' ? 'group-c' : 'group-' ~ firstLetter %}
+  <div class="group">
+    <h3>{% if groupName starts with 'Bungalow' %}Bungalow{% else %}Groupe {{ groupName }}{% endif %}</h3>
+    <div class="{{ groupClass }}">
+      {% for couch in groupCouches %}
+        {% if not couch.blocked %}
+          <button
+            class="btn-couch {{ couch.cssClass }}{% if couch.selected %} selected-couch{% endif %}"
+            hx-post="{{ path('ts_lodge.htmx.assign_couch', {bookingId: bookingId}) }}"
+            hx-vals='{"couch": "{{ couch.name }}"}'
+            hx-push-url="{{ path('ts_lodge.users') }}">{{ couch.name }}</button>
+        {% else %}
+          <button
+            class="btn-couch {{ couch.cssClass }}"
+            title="Non disponible pour cette période"
+            disabled>{{ couch.name }}</button>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endfor %}

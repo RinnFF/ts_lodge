@@ -1,0 +1,40 @@
+{#
+/**
+ * @file
+ * ts-lodge-programme-form.html.twig – HTMX partial: add/edit programme form.
+ * Variables: programme (array or null — null means create mode)
+ */
+#}
+{% set isEdit = programme is not null %}
+{% set formAction = isEdit
+  ? path('ts_lodge.htmx.programme', {id: programme.id})
+  : path('ts_lodge.htmx.create_programme') %}
+
+<h3>{{ isEdit ? 'Modifier un programme' : 'Ajouter un programme' }}</h3>
+<form {% if isEdit %}hx-patch{% else %}hx-post{% endif %}="{{ formAction }}"
+      hx-target="#programsTable tbody"
+      hx-swap="innerHTML">
+
+  <label>Catégorie</label>
+  <select name="category" required>
+    <option value="" disabled {% if not isEdit %}selected{% endif %}>Choisir une catégorie</option>
+    {% for cat in ['Scientifique', 'Éducatif', 'Conservation', 'Bénévole', 'Autre'] %}
+      <option value="{{ cat }}"
+        {% if isEdit and programme.category == cat %}selected{% endif %}>{{ cat }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Nom du programme</label>
+  <input type="text" name="name" required
+         value="{{ isEdit ? programme.name : '' }}" />
+
+  <label>Code</label>
+  <input type="text" name="code" required
+         value="{{ isEdit ? programme.code : '' }}" />
+
+  <div style="margin-top:10px;">
+    <button type="submit" class="btn-save">Enregistrer</button>
+    <button type="button" class="btn-close"
+      onclick="document.getElementById('programFormContainer').innerHTML=''">Annuler</button>
+  </div>
+</form>

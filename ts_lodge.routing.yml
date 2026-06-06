@@ -1,3 +1,5 @@
+# ── Page routes ────────────────────────────────────────────────────────────────
+
 ts_lodge.dashboard:
   path: '/ts-lodge'
   defaults:
@@ -23,28 +25,32 @@ ts_lodge.add_user:
     _permission: 'create ts_lodge_usager'
 
 ts_lodge.edit_user:
-  path: '/ts-lodge/usagers/modifier'
+  path: '/ts-lodge/usagers/modifier/{id}'
   defaults:
     _controller: '\Drupal\ts_lodge\Controller\TsLodgeController::editUser'
     _title: 'Modifier un usager'
   requirements:
     _permission: 'edit ts_lodge_usager'
+    id: '\d+'
 
 ts_lodge.book_user:
-  path: '/ts-lodge/reservation'
+  path: '/ts-lodge/reservation/{userId}'
   defaults:
     _controller: '\Drupal\ts_lodge\Controller\TsLodgeController::bookUser'
     _title: 'Réservation'
   requirements:
     _permission: 'create ts_lodge_booking'
+    userId: '\d+'
 
 ts_lodge.find_couch:
-  path: '/ts-lodge/choisir-couchage'
+  path: '/ts-lodge/choisir-couchage/{userId}/{bookingId}'
   defaults:
     _controller: '\Drupal\ts_lodge\Controller\TsLodgeController::findCouch'
     _title: 'Choisir un couchage'
   requirements:
     _permission: 'edit ts_lodge_booking'
+    userId: '\d+'
+    bookingId: '\d+'
 
 ts_lodge.couches:
   path: '/ts-lodge/couchages'
@@ -70,10 +76,7 @@ ts_lodge.migrate:
   requirements:
     _permission: 'administer site configuration'
 
-# REST endpoints are handled by Drupal's REST module automatically
-# via the RestResource plugin annotations — no manual routing needed.
-
-# ── JSON API endpoints (replaces REST module routing) ──────────────
+# ── JSON API endpoints (kept for external/migration use) ───────────────────────
 
 ts_lodge.api.usagers.collection:
   path: '/api/ts-lodge/usagers'
@@ -122,3 +125,118 @@ ts_lodge.api.programmes.item:
   methods: [GET, PATCH, DELETE]
   requirements:
     _permission: 'access ts_lodge'
+
+# ── HTMX partial endpoints (return rendered HTML fragments) ───────────────────
+
+ts_lodge.htmx.users_rows:
+  path: '/ts-lodge/htmx/usagers-rows'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::usersRows'
+  methods: [GET]
+  requirements:
+    _permission: 'access ts_lodge'
+
+ts_lodge.htmx.create_usager:
+  path: '/ts-lodge/htmx/usager'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::createUsager'
+  methods: [POST]
+  requirements:
+    _permission: 'create ts_lodge_usager'
+
+ts_lodge.htmx.usager:
+  path: '/ts-lodge/htmx/usager/{id}'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::updateUsager'
+  methods: [PATCH, DELETE]
+  requirements:
+    _permission: 'access ts_lodge'
+    id: '\d+'
+
+ts_lodge.htmx.create_booking:
+  path: '/ts-lodge/htmx/usager/{userId}/booking'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::createBooking'
+  methods: [POST]
+  requirements:
+    _permission: 'create ts_lodge_booking'
+    userId: '\d+'
+
+ts_lodge.htmx.booking:
+  path: '/ts-lodge/htmx/booking/{id}'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::updateBooking'
+  methods: [PATCH, DELETE]
+  requirements:
+    _permission: 'access ts_lodge'
+    id: '\d+'
+
+ts_lodge.htmx.programmes_rows:
+  path: '/ts-lodge/htmx/programmes-rows'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::programmesRows'
+  methods: [GET]
+  requirements:
+    _permission: 'view ts_lodge_programme'
+
+ts_lodge.htmx.programme_form:
+  path: '/ts-lodge/htmx/programme-form'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::programmeForm'
+    id: ~
+  methods: [GET]
+  requirements:
+    _permission: 'access ts_lodge'
+
+ts_lodge.htmx.programme_form_edit:
+  path: '/ts-lodge/htmx/programme-form/{id}'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::programmeForm'
+  methods: [GET]
+  requirements:
+    _permission: 'access ts_lodge'
+    id: '\d+'
+
+ts_lodge.htmx.create_programme:
+  path: '/ts-lodge/htmx/programme'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::createProgramme'
+  methods: [POST]
+  requirements:
+    _permission: 'create ts_lodge_programme'
+
+ts_lodge.htmx.programme:
+  path: '/ts-lodge/htmx/programme/{id}'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::updateProgramme'
+  methods: [PATCH, DELETE]
+  requirements:
+    _permission: 'access ts_lodge'
+    id: '\d+'
+
+ts_lodge.htmx.couches_content:
+  path: '/ts-lodge/htmx/couchages'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::couchesContent'
+  methods: [GET]
+  requirements:
+    _permission: 'view ts_lodge_booking'
+
+ts_lodge.htmx.find_couch_buttons:
+  path: '/ts-lodge/htmx/couchage/{userId}/{bookingId}'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::findCouchButtons'
+  methods: [GET]
+  requirements:
+    _permission: 'edit ts_lodge_booking'
+    userId: '\d+'
+    bookingId: '\d+'
+
+ts_lodge.htmx.assign_couch:
+  path: '/ts-lodge/htmx/assigner-couchage/{bookingId}'
+  defaults:
+    _controller: '\Drupal\ts_lodge\Controller\TsLodgeHtmxController::assignCouch'
+  methods: [POST]
+  requirements:
+    _permission: 'edit ts_lodge_booking'
+    bookingId: '\d+'

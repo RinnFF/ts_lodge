@@ -2,6 +2,10 @@
 vendor/
 node_modules/
 
+# Keep bundled JS vendor libraries
+!js/vendor/
+!js/vendor/htmx.min.js
+
 # OS
 .DS_Store
 Thumbs.db

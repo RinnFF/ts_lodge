@@ -2,38 +2,56 @@
 /**
  * @file
  * ts-lodge-book-user.html.twig
+ * Variables: user, booking (nullable), programmes (array)
  */
 #}
 <div class="tslo-wrapper">
 <div class="tslo-container">
   <h2>Réservation d'un usager</h2>
-  <form id="bookingForm">
-    <label for="lastName">Nom</label>
-    <input type="text" id="lastName" disabled />
 
-    <label for="firstName">Prénom</label>
-    <input type="text" id="firstName" disabled />
+  {% set isEdit = booking is not null %}
+  {% set formAction = isEdit
+    ? path('ts_lodge.htmx.booking', {id: booking.id})
+    : path('ts_lodge.htmx.create_booking', {userId: user.id}) %}
+
+  <form {% if isEdit %}hx-patch{% else %}hx-post{% endif %}="{{ formAction }}">
+    <label>Nom</label>
+    <input type="text" value="{{ user.lastName }}" disabled />
+
+    <label>Prénom</label>
+    <input type="text" value="{{ user.firstName }}" disabled />
 
     <label>Âge</label>
-    <div id="ageStatus" class="age-status"></div>
+    <div class="age-status {{ user.ageClass }}">{{ user.ageStatus }}</div>
 
-    <label for="programme">Programme</label>
-    <select id="programme" required>
-      <option value="" disabled selected>Choisir un programme</option>
+    <label for="programmeId">Programme</label>
+    <select id="programmeId" name="programmeId" required>
+      <option value="" disabled {% if not isEdit %}selected{% endif %}>Choisir un programme</option>
+      {% for p in programmes %}
+        <option value="{{ p.id }}"
+          {% if isEdit and booking.programmeId == p.id %}selected{% endif %}>
+          {{ p.category }} – {{ p.name }} ({{ p.code }})
+        </option>
+      {% endfor %}
     </select>
 
     <label for="arrivalDate">Date d'arrivée</label>
-    <input type="date" id="arrivalDate" required />
+    <input type="date" id="arrivalDate" name="arrivalDate" required
+           value="{{ isEdit ? booking.arrivalDate : '' }}" />
 
     <label for="departureDate">Date de départ</label>
-    <input type="date" id="departureDate" required />
+    <input type="date" id="departureDate" name="departureDate" required
+           value="{{ isEdit ? booking.departureDate : '' }}" />
 
     <label for="notes">Notes</label>
-    <textarea id="notes" rows="4" placeholder="Remarques éventuelles"></textarea>
+    <textarea id="notes" name="notes" rows="4"
+              placeholder="Remarques éventuelles">{{ isEdit ? booking.notes : '' }}</textarea>
+
+    <p id="formError" style="color:red;display:none;"></p>
 
     <div id="btnContainer">
-      <button type="button" id="findCouchBtn" class="btn-save">Trouver un couchage</button>
-      <button type="button" id="backBtn" class="btn-close">Retour</button>
+      <button type="submit" class="btn-save">Trouver un couchage</button>
+      <a href="{{ path('ts_lodge.users') }}" class="btn-close">Retour</a>
     </div>
   </form>
 </div>

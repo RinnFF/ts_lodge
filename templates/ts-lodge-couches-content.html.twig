@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * ts-lodge-couches-content.html.twig – HTMX partial: couches occupation for a date.
+ * Variables: occupants (array keyed by couch name → [names]), date (string)
+ */
+#}
+{% if occupants is empty %}
+  <p>Aucun couchage occupé ce jour-là.</p>
+{% else %}
+  {% for couch, names in occupants %}
+    <div class="group">
+      <h3>{{ couch }}</h3>
+      <p>{{ names|join(', ') }}</p>
+    </div>
+  {% endfor %}
+{% endif %}

@@ -2,36 +2,46 @@
 /**
  * @file
  * ts-lodge-edit-user.html.twig
+ * Variables: user (array with id, lastName, firstName, gender, isCouple, birthDate)
  */
 #}
 <div class="tslo-wrapper">
 <div class="tslo-container">
   <h2>Modifier un usager</h2>
-  <form id="editUserForm">
+  <form hx-patch="{{ path('ts_lodge.htmx.usager', {id: user.id}) }}">
     <label for="lastName">Nom</label>
-    <input type="text" id="lastName" required />
+    <input type="text" id="lastName" name="lastName"
+           value="{{ user.lastName }}" required style="text-transform:uppercase" />
 
     <label for="firstName">Prénom</label>
-    <input type="text" id="firstName" required />
+    <input type="text" id="firstName" name="firstName"
+           value="{{ user.firstName }}" required />
 
     <label for="gender">Genre</label>
-    <select id="gender" required>
-      <option value="" disabled selected>Choisir un genre</option>
-      <option value="Féminin">Féminin</option>
-      <option value="Masculin">Masculin</option>
+    <select id="gender" name="gender" required>
+      <option value="" disabled>Choisir un genre</option>
+      <option value="Féminin"  {% if user.gender == 'Féminin' %}selected{% endif %}>Féminin</option>
+      <option value="Masculin" {% if user.gender == 'Masculin' %}selected{% endif %}>Masculin</option>
     </select>
 
     <label>
-      <input type="checkbox" id="isCouple" /> En couple
+      <input type="checkbox" id="isCouple" name="isCouple" value="1"
+             {% if user.isCouple %}checked{% endif %} /> En couple
     </label>
 
     <label for="birthDate">Date de naissance</label>
-    <input type="date" id="birthDate" required />
+    <input type="date" id="birthDate" name="birthDate"
+           value="{{ user.birthDate }}" required />
 
-    <div style="margin-top: 20px;">
+    <p id="formError" style="color:red;display:none;"></p>
+
+    <div style="margin-top:20px;">
       <button type="submit" class="btn-save">Enregistrer les modifications</button>
-      <button type="button" id="deleteBtn" class="btn-delete">Supprimer cet utilisateur</button>
-      <button type="button" id="closeBtn" class="btn-close">Fermer</button>
+      <button type="button" class="btn-delete"
+        hx-delete="{{ path('ts_lodge.htmx.usager', {id: user.id}) }}"
+        hx-confirm="Supprimer {{ user.firstName }} {{ user.lastName }} ?"
+        hx-push-url="{{ path('ts_lodge.users') }}">Supprimer cet usager</button>
+      <a href="{{ path('ts_lodge.users') }}" class="btn-close">Fermer</a>
     </div>
   </form>
 </div>

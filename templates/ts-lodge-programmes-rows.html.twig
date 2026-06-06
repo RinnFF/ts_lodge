@@ -1,0 +1,27 @@
+{#
+/**
+ * @file
+ * ts-lodge-programmes-rows.html.twig – HTMX partial: programmes table <tbody> rows.
+ * Variables: programmes (array)
+ */
+#}
+{% for p in programmes %}
+<tr>
+  <td>{{ p.category }}</td>
+  <td>{{ p.name }}</td>
+  <td>{{ p.code }}</td>
+  <td>
+    <button class="btn-edit"
+      hx-get="{{ path('ts_lodge.htmx.programme_form_edit', {id: p.id}) }}"
+      hx-target="#programFormContainer"
+      hx-swap="innerHTML">Edit</button>
+    <button class="btn-delete"
+      hx-delete="{{ path('ts_lodge.htmx.programme', {id: p.id}) }}"
+      hx-confirm="Supprimer ce programme ?"
+      hx-target="#programsTable tbody"
+      hx-swap="innerHTML">Supprimer</button>
+  </td>
+</tr>
+{% else %}
+<tr><td colspan="4">Aucun programme enregistré.</td></tr>
+{% endfor %}

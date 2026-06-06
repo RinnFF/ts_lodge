@@ -7,23 +7,33 @@
 <div class="tslo-wrapper">
 <div class="tslo-container">
   <h2>Liste des usagers</h2>
-  <button id="addUserBtn" class="btn-add-user">+ Ajouter un usager</button>
-  <button id="viewCouchBtn" class="btn-find-couch">Voir les couchages</button>
-  <button id="programsBtn" class="btn-programs">Programmes</button>
+  <a href="{{ path('ts_lodge.add_user') }}"  class="btn-add-user">+ Ajouter un usager</a>
+  <a href="{{ path('ts_lodge.couches') }}"   class="btn-find-couch">Voir les couchages</a>
+  <a href="{{ path('ts_lodge.programs') }}"  class="btn-programs">Programmes</a>
+
   <table id="usersTable">
-    <thead>
+    <thead id="usersTableHead">
       <tr>
-        <th data-field="lastName">Nom</th>
-        <th data-field="firstName">Prénom</th>
-        <th data-field="gender">Genre</th>
-        <th data-field="birthDate">Date de naissance</th>
+        <th hx-get="{{ path('ts_lodge.htmx.users_rows') }}?sort=lastName"
+            hx-target="#usersTable tbody" hx-swap="innerHTML"
+            style="cursor:pointer">Nom</th>
+        <th hx-get="{{ path('ts_lodge.htmx.users_rows') }}?sort=firstName"
+            hx-target="#usersTable tbody" hx-swap="innerHTML"
+            style="cursor:pointer">Prénom</th>
+        <th>Genre</th>
+        <th hx-get="{{ path('ts_lodge.htmx.users_rows') }}?sort=birthDate"
+            hx-target="#usersTable tbody" hx-swap="innerHTML"
+            style="cursor:pointer">Date de naissance</th>
         <th>Âge</th>
         <th>Actions</th>
-        <th data-field="closestDate">Séjour</th>
+        <th>Séjour</th>
       </tr>
     </thead>
-    <tbody>
-      {# Chargé par JS #}
+    <tbody
+      hx-get="{{ path('ts_lodge.htmx.users_rows') }}"
+      hx-trigger="load"
+      hx-swap="innerHTML">
+      <tr><td colspan="7">Chargement…</td></tr>
     </tbody>
   </table>
 </div>

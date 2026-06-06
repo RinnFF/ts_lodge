@@ -2,6 +2,7 @@
 /**
  * @file
  * ts-lodge-programs.html.twig
+ * The programme list rows and the add/edit form are loaded/swapped by HTMX.
  */
 #}
 <div class="tslo-wrapper">
@@ -9,8 +10,11 @@
   <h2>Liste des programmes</h2>
 
   <div style="display:flex; gap:10px; margin-bottom:15px;">
-    <button id="addProgramBtn" class="btn-add-program">+ Ajouter un programme</button>
-    <button id="backBtn" class="btn-close-program">Fermer</button>
+    <button class="btn-add-program"
+      hx-get="{{ path('ts_lodge.htmx.programme_form') }}"
+      hx-target="#programFormContainer"
+      hx-swap="innerHTML">+ Ajouter un programme</button>
+    <a href="{{ path('ts_lodge.users') }}" class="btn-close-program">Fermer</a>
   </div>
 
   <table id="programsTable">
@@ -22,33 +26,14 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody
+      hx-get="{{ path('ts_lodge.htmx.programmes_rows') }}"
+      hx-trigger="load"
+      hx-swap="innerHTML">
+      <tr><td colspan="4">Chargement…</td></tr>
+    </tbody>
   </table>
 
-  <div id="programFormContainer" style="display:none; margin-top:20px;">
-    <h3 id="formTitle">Ajouter un programme</h3>
-    <form id="programForm">
-      <label>Catégorie</label>
-      <select id="category" required>
-        <option value="" disabled selected>Choisir une catégorie</option>
-        <option value="Scientifique">Scientifique</option>
-        <option value="Éducatif">Éducatif</option>
-        <option value="Conservation">Conservation</option>
-        <option value="Bénévole">Bénévole</option>
-        <option value="Autre">Autre</option>
-      </select>
-
-      <label>Nom du programme</label>
-      <input type="text" id="name" required />
-
-      <label>Code</label>
-      <input type="text" id="code" required />
-
-      <div style="margin-top:10px;">
-        <button type="submit" class="btn-save">Enregistrer</button>
-        <button type="button" id="cancelBtn" class="btn-close">Annuler</button>
-      </div>
-    </form>
-  </div>
+  <div id="programFormContainer" style="margin-top:20px;"></div>
 </div>
 </div>

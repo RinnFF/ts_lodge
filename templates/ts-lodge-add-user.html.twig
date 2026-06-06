@@ -7,30 +7,32 @@
 <div class="tslo-wrapper">
 <div class="tslo-container">
   <h2>Ajouter un usager</h2>
-  <form id="userForm">
+  <form hx-post="{{ path('ts_lodge.htmx.create_usager') }}">
     <label for="lastName">Nom</label>
-    <input type="text" id="lastName" required />
+    <input type="text" id="lastName" name="lastName" required style="text-transform:uppercase" />
 
     <label for="firstName">Prénom</label>
-    <input type="text" id="firstName" required />
+    <input type="text" id="firstName" name="firstName" required />
 
     <label for="gender">Genre</label>
-    <select id="gender" required>
+    <select id="gender" name="gender" required>
       <option value="" disabled selected>Choisir un genre</option>
       <option value="Féminin">Féminin</option>
       <option value="Masculin">Masculin</option>
     </select>
 
     <label>
-      <input type="checkbox" id="isCouple" /> En couple
+      <input type="checkbox" id="isCouple" name="isCouple" value="1" /> En couple
     </label>
 
     <label for="birthDate">Date de naissance</label>
-    <input type="date" id="birthDate" required />
+    <input type="date" id="birthDate" name="birthDate" required />
 
-    <div style="margin-top: 20px;">
-      <button type="submit" id="saveBtn" class="btn-save">Enregistrer</button>
-      <button type="button" id="closeBtn" class="btn-close">Fermer</button>
+    <p id="formError" style="color:red;display:none;"></p>
+
+    <div style="margin-top:20px;">
+      <button type="submit" class="btn-save">Enregistrer</button>
+      <a href="{{ path('ts_lodge.users') }}" class="btn-close">Fermer</a>
     </div>
   </form>
 </div>

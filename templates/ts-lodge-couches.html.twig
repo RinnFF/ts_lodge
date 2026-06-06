@@ -2,18 +2,32 @@
 /**
  * @file
  * ts-lodge-couches.html.twig
+ * Date navigation uses minimal inline JS for prev/next arithmetic only.
+ * The actual data fetch and render is HTMX.
  */
 #}
-{{ attach_library('ts_lodge/calendar') }}
 <div class="tslo-wrapper">
 <div class="tslo-container">
-  <h2 id="couchesTitle">Occupation des couchages</h2>
+  <h2>Occupation des couchages</h2>
+
   <div id="selectDate">
-    <button id="prevDay">←</button>
-    <input type="date" id="selectedDate" />
-    <button id="nextDay">→</button>
+    <button type="button"
+      onclick="var d=document.getElementById('selectedDate');d.value=new Date(new Date(d.value+'T00:00:00').getTime()-86400000).toISOString().split('T')[0];d.dispatchEvent(new Event('change'))">←</button>
+
+    <input type="date" id="selectedDate"
+           value="{{ 'now'|date('Y-m-d') }}"
+           hx-get="{{ path('ts_lodge.htmx.couches_content') }}"
+           hx-trigger="change, load"
+           hx-include="#selectedDate"
+           hx-target="#couchesContainer"
+           hx-swap="innerHTML" />
+
+    <button type="button"
+      onclick="var d=document.getElementById('selectedDate');d.value=new Date(new Date(d.value+'T00:00:00').getTime()+86400000).toISOString().split('T')[0];d.dispatchEvent(new Event('change'))">→</button>
   </div>
+
   <div id="couchesContainer"></div>
-  <button type="button" id="closeBtn" class="btn-close">Fermer</button>
+
+  <a href="{{ path('ts_lodge.users') }}" class="btn-close">Fermer</a>
 </div>
 </div>
