@@ -66,7 +66,7 @@ Wrap the module's output in <div class="tslo-wrapper"> */
   font-size: 16px;
 }
 .tslo-wrapper .btn-find-couch:hover {
-  background-color: #097e79;
+  background-color: var(--ts-green);
 }
 .tslo-wrapper .btn-programs {
   background-color: var(--ts-blue-dark);
@@ -128,9 +128,10 @@ Wrap the module's output in <div class="tslo-wrapper"> */
   transition: background-color 0.2s;
 }
 .tslo-wrapper .btn-edit,
-.tslo-wrapper .btn-book {
+.tslo-wrapper .btn-book,
+.tslo-wrapper .btn-close {
   display: inline-block;
-  padding: 8px 14px;
+  padding: 6px 10px;
   border-radius: 6px;
   font-size: 12px;
   font-weight: bold;
@@ -138,16 +139,20 @@ Wrap the module's output in <div class="tslo-wrapper"> */
   text-decoration: none;
   transition: background-color 0.2s;
 }
+/* .btn-edit is the 'modifier usager' button */
 .tslo-wrapper .btn-edit {
   background-color: var(--ts-blue-dark);
   color: white;
+  margin-bottom:0.25rem;
 }
 .tslo-wrapper .btn-edit:hover {
   background-color: #0d192b;
 }
+/* .btn-book is the 'ajouter un séjour' button */
 .tslo-wrapper .btn-book {
   background-color: var(--ts-blue-medium);
   color: white;
+  margin-top:0.25rem;
 }
 .tslo-wrapper .btn-book:hover {
   background-color: #084879;
@@ -583,7 +588,7 @@ Wrap the module's output in <div class="tslo-wrapper"> */
   font-size: 10px;
   font-weight: bold;
   padding: 2px 6px;
-  border-radius: 10px;
+  border-radius: 6px;
 }
 .tslo-wrapper .stay-badge--current {
   background-color: var(--ts-green);
