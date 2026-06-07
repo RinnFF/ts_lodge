@@ -40,11 +40,12 @@ class TsLodgeHtmxController extends TsLodgeController {
       return new Response($err, 422);
     }
     $entity = TsLodgeUsager::create([
-      'last_name'  => strtoupper(trim($data['lastName']  ?? '')),
-      'first_name' => $this->titleCase($data['firstName'] ?? ''),
-      'gender'     => $data['gender']    ?? '',
-      'is_couple'  => !empty($data['isCouple']),
-      'birth_date' => $data['birthDate'] ?? '',
+      'last_name'     => strtoupper(trim($data['lastName']  ?? '')),
+      'first_name'    => $this->titleCase($data['firstName'] ?? ''),
+      'gender'        => $data['gender']    ?? '',
+      'is_couple'     => !empty($data['isCouple']),
+      'birth_date'    => $data['birthDate'] ?? '',
+      'researcher_id' => trim($data['researcherId'] ?? '') ?: NULL,
     ]);
     $entity->save();
     return $this->htmxRedirect('ts_lodge.users');
@@ -74,11 +75,12 @@ class TsLodgeHtmxController extends TsLodgeController {
     if ($err = $this->validateUsager($data)) {
       return new Response($err, 422);
     }
-    $entity->set('last_name',  strtoupper(trim($data['lastName']  ?? '')));
-    $entity->set('first_name', $this->titleCase($data['firstName'] ?? ''));
-    $entity->set('gender',     $data['gender']    ?? '');
-    $entity->set('is_couple',  !empty($data['isCouple']));
-    $entity->set('birth_date', $data['birthDate'] ?? '');
+    $entity->set('last_name',     strtoupper(trim($data['lastName']  ?? '')));
+    $entity->set('first_name',    $this->titleCase($data['firstName'] ?? ''));
+    $entity->set('gender',        $data['gender']    ?? '');
+    $entity->set('is_couple',     !empty($data['isCouple']));
+    $entity->set('birth_date',    $data['birthDate'] ?? '');
+    $entity->set('researcher_id', trim($data['researcherId'] ?? '') ?: NULL);
     $entity->save();
     return $this->htmxRedirect('ts_lodge.users');
   }

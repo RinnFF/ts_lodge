@@ -93,12 +93,14 @@ class TsLodgeController extends ControllerBase {
       $users[] = $row;
     }
 
-    $validSorts = ['lastName', 'firstName', 'gender', 'birthDate'];
+    $validSorts = ['lastName', 'firstName', 'gender', 'birthDate', 'participantNumber'];
     if (!in_array($sort, $validSorts, TRUE)) {
       $sort = 'lastName';
     }
     usort($users, function (array $a, array $b) use ($sort, $dir): int {
-      $cmp = strcmp((string) ($a[$sort] ?? ''), (string) ($b[$sort] ?? ''));
+      $cmp = $sort === 'participantNumber'
+        ? ($a['id'] <=> $b['id'])
+        : strcmp((string) ($a[$sort] ?? ''), (string) ($b[$sort] ?? ''));
       return $dir === 'desc' ? -$cmp : $cmp;
     });
 
@@ -190,15 +192,18 @@ class TsLodgeController extends ControllerBase {
     if ($birthStr) {
       $age = (int) (new \DateTime())->diff(new \DateTime($birthStr))->y;
     }
+    $id = (int) $e->id();
     return [
-      'id'        => (int) $e->id(),
-      'lastName'  => $e->get('last_name')->value  ?? '',
-      'firstName' => $e->get('first_name')->value ?? '',
-      'gender'    => $e->get('gender')->value     ?? '',
-      'isCouple'  => (bool) $e->get('is_couple')->value,
-      'birthDate' => $birthStr,
-      'ageStatus' => $age >= 21 ? '+21' : '<21',
-      'ageClass'  => $age >= 21 ? 'age-ok' : 'age-low',
+      'id'                => $id,
+      'participantNumber' => 'TSL-' . str_pad($id, 3, '0', STR_PAD_LEFT),
+      'lastName'          => $e->get('last_name')->value  ?? '',
+      'firstName'         => $e->get('first_name')->value ?? '',
+      'gender'            => $e->get('gender')->value     ?? '',
+      'isCouple'          => (bool) $e->get('is_couple')->value,
+      'birthDate'         => $birthStr,
+      'researcherId'      => $e->get('researcher_id')->value ?? '',
+      'ageStatus'         => $age >= 21 ? '+21' : '<21',
+      'ageClass'          => $age >= 21 ? 'age-ok' : 'age-low',
     ];
   }
 

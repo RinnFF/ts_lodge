@@ -84,6 +84,11 @@ function ts_lodge_schema(): array {
         'not null' => TRUE,
         'default'  => '',
       ],
+      'researcher_id' => [
+        'type'     => 'varchar',
+        'length'   => 128,
+        'not null' => FALSE,
+      ],
       'created' => [
         'type'     => 'int',
         'not null' => TRUE,
@@ -221,4 +226,16 @@ function ts_lodge_schema(): array {
   ];
 
   return $schema;
+}
+
+/**
+ * Add researcher_id field to existing ts_lodge_usager tables.
+ */
+function ts_lodge_update_10001(): void {
+  $manager    = \Drupal::entityDefinitionUpdateManager();
+  $definition = \Drupal\Core\Field\BaseFieldDefinition::create('string')
+    ->setLabel(t('Identifiant chercheur'))
+    ->setRequired(FALSE)
+    ->setSetting('max_length', 128);
+  $manager->installFieldStorageDefinition('researcher_id', 'ts_lodge_usager', 'ts_lodge', $definition);
 }

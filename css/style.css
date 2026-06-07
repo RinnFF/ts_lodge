@@ -306,6 +306,22 @@ Wrap the module's output in <div class="tslo-wrapper"> */
   font-size: 1.1em;
   margin-left: 4px;
 }
+.tslo-wrapper .participant-num {
+  font-family: monospace;
+  font-size: 0.9em;
+  color: var(--ts-blue-medium);
+  white-space: nowrap;
+}
+.tslo-wrapper .participant-num-field {
+  font-family: monospace;
+  background: var(--ts-gray);
+  color: #555;
+}
+.tslo-wrapper .field-optional {
+  font-weight: normal;
+  font-size: 0.85em;
+  color: #888;
+}
 .tslo-wrapper #selectDate, .tslo-wrapper #couchesContainer, .tslo-wrapper #couchesTitle, .tslo-wrapper #btnContainer {
   display: flex;
   align-items: center;

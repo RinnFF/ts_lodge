@@ -14,6 +14,9 @@
   <table id="usersTable">
     <thead id="usersTableHead">
       <tr>
+        <th hx-get="{{ path('ts_lodge.htmx.users_rows') }}?sort=participantNumber"
+            hx-target="#usersTableBody" hx-swap="outerHTML"
+            style="cursor:pointer">N° TSL</th>
         <th hx-get="{{ path('ts_lodge.htmx.users_rows') }}?sort=lastName"
             hx-target="#usersTableBody" hx-swap="outerHTML"
             style="cursor:pointer">Nom</th>

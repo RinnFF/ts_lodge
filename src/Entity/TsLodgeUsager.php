@@ -79,6 +79,13 @@ class TsLodgeUsager extends ContentEntityBase {
       ->setDisplayOptions('view', ['label' => 'inline', 'type' => 'datetime_default', 'weight' => 4])
       ->setDisplayOptions('form', ['type' => 'datetime_default', 'weight' => 4]);
 
+    $fields['researcher_id'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Identifiant chercheur'))
+      ->setRequired(FALSE)
+      ->setSetting('max_length', 128)
+      ->setDisplayOptions('view', ['label' => 'inline', 'type' => 'string', 'weight' => 5])
+      ->setDisplayOptions('form', ['type' => 'string_textfield', 'weight' => 5]);
+
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'));
 

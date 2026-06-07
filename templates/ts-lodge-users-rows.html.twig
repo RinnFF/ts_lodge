@@ -8,6 +8,7 @@
 <tbody id="usersTableBody">
 {% for user in users %}
 <tr class="user-row">
+  <td class="participant-num">{{ user.participantNumber }}</td>
   <td>{{ user.lastName }}</td>
   <td>{{ user.firstName }}</td>
   <td>{{ user.gender }}{% if user.isCouple %} <span class="couple-badge">&#10084;&#65039;</span>{% endif %}</td>
@@ -19,7 +20,7 @@
   </td>
 </tr>
 <tr class="stays-row">
-  <td colspan="6">
+  <td colspan="7">
     <details class="stays-accordion">
       <summary class="stays-summary">
         {%- set nb = user.bookings|length -%}
@@ -48,6 +49,6 @@
   </td>
 </tr>
 {% else %}
-<tr><td colspan="6">Aucun usager enregistré.</td></tr>
+<tr><td colspan="7">Aucun usager enregistré.</td></tr>
 {% endfor %}
 </tbody>
