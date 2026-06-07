@@ -127,6 +127,17 @@ Wrap the module's output in <div class="tslo-wrapper"> */
   font-weight: bold;
   transition: background-color 0.2s;
 }
+.tslo-wrapper .btn-edit,
+.tslo-wrapper .btn-book {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
 .tslo-wrapper .btn-edit {
   background-color: var(--ts-blue-dark);
   color: white;

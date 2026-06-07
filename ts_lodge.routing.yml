@@ -34,7 +34,7 @@ ts_lodge.edit_user:
     id: '\d+'
 
 ts_lodge.book_user:
-  path: '/ts-lodge/reservation/{userId}'
+  path: '/ts-lodge/usagers/{userId}/reserver'
   defaults:
     _controller: '\Drupal\ts_lodge\Controller\TsLodgeController::bookUser'
     _title: 'Réservation'
